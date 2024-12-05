@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String @unique
+  password String
+  role     Role   @default(USER)
+
+  created_At DateTime @default(now())
+  updated_At DateTime @updatedAt
+
+  employee Employee?
+  work     WorkReport[]
+
+  @@index([id, email])
+}
+
+model Employee {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  employee_id         String
+  name                String
+  email               String   @unique
+  address             String
+  gender              Gender
+  date_of_birth       DateTime
+  primary_contact     String
+  emergency_contact_1 String?
+  emergency_contact_2 String?
+  city                String?  @default("New Delhi")
+  country             String?  @default("India")
+  aadhar_card         String?
+  PAN_no              String?
+
+  branch           String       @default("New Delhi")
+  designation      String
+  department       String
+  date_of_joining  DateTime
+  employement_type EmployeeType
+
+  created_At DateTime @default(now())
+  updated_At DateTime @updatedAt
+
+  userID String @unique @db.ObjectId
+  user   User   @relation(fields: [userID], references: [id], onDelete: Cascade)
+
+  payroll Payroll?
+
+  @@index([id, email, userID])
+}
+
+model Payroll {
+  id               String @id @default(auto()) @map("_id") @db.ObjectId
+  basic_salary     Int
+  gross_salary     Int
+  net_salary       Int
+  HRA              Int?   @default(0)
+  medical          Int?   @default(0)
+  convenience      Int?   @default(0)
+  other_allowences Int?   @default(0)
+  deducation       Int?   @default(0)
+
+  created_At DateTime @default(now())
+  updated_At DateTime @updatedAt
+
+  empID    String   @unique @db.ObjectId
+  employee Employee @relation(fields: [empID], references: [id], onDelete: Cascade)
+
+  bank BankAccount?
+
+  @@index([id, empID])
+}
+
+model BankAccount {
+  id                  String @id @default(auto()) @map("_id") @db.ObjectId
+  account_holder_name String
+  account_no          String
+  bank_name           String
+  branch              String
+  IFSC_code           String
+
+  created_At DateTime @default(now())
+  updated_At DateTime @updatedAt
+
+  payID   String  @unique @db.ObjectId
+  payroll Payroll @relation(fields: [payID], references: [id], onDelete: Cascade)
+
+  @@index([id, payID])
+}
+
+model WorkReport {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  updated_At DateTime @default(now())
+  work       String
+
+  userID String @unique @db.ObjectId
+  user   User   @relation(fields: [userID], references: [id], onDelete: Cascade)
+
+  @@index([id, userID])
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum EmployeeType {
+  FULL_TIME
+  PART_TIME
+  INTERNSHIP
+  TEMPORARY
+  CONTRACT
+}

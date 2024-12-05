@@ -20,7 +20,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 import { EmployeeSchemaType, EmployeeSchema } from "@/types";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
@@ -28,12 +27,15 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "../ui/calendar";
 import { IndianStates } from "@/constant";
+import { createEmployee } from "@/server/action";
+import { useToast } from "@/hooks/use-toast";
 
-const EmployeeForm = () => {
+const EmployeeForm = ({ _id }: { _id: string }) => {
+  const { toast } = useToast();
   const form = useForm<EmployeeSchemaType>({
     resolver: zodResolver(EmployeeSchema),
     defaultValues: {
-      // date_of_birth: "",
+      date_of_birth: "",
       name: "",
       email: "",
       employee_id: "",
@@ -54,8 +56,18 @@ const EmployeeForm = () => {
   });
 
   async function onSubmit(values: EmployeeSchemaType) {
-    values.date_of_birth = new Date(values.date_of_birth as string);
-    console.log(values);
+    const res = await createEmployee(values, _id);
+
+    if (res.status) {
+      toast({
+        title: res.message,
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        title: res.error,
+      });
+    }
   }
 
   return (
@@ -164,7 +176,7 @@ const EmployeeForm = () => {
                   <Input
                     placeholder="date of birth"
                     type="date"
-                    value={format(field.value, "PPP")}
+                    // value={field.value ?  format(field.value, "yyyy-MM-dd") : ""}
                     {...field}
                   />
                 </FormControl>

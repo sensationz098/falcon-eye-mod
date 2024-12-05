@@ -29,21 +29,13 @@ export const EmployeeSchema = z.object({
     .trim()
     .min(2, "Address must be at least 2 characters long"),
   gender: z.enum(["MALE", "FEMALE"]),
-  date_of_birth: z.union([z.string(), z.date()]),
+  date_of_birth: z.string(),
   primary_contact: z
     .string()
     .trim()
     .length(10, "Primary contact must be 10 digits long"),
-  emergency_contact_1: z
-    .string()
-    .trim()
-    .length(10, "Emergency contact must be 10 digits long")
-    .optional(),
-  emergency_contact_2: z
-    .string()
-    .trim()
-    .length(10, "Emergency contact must be 10 digits long")
-    .optional(),
+  emergency_contact_1: z.string().trim().optional(),
+  emergency_contact_2: z.string().trim().optional(),
   city: z.string().trim().default("New Delhi"),
   country: z.string().trim().default("India"),
   aadhar_no: z.string().trim().length(12, "Aadhar card must be 12 digits long"),

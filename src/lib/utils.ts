@@ -16,3 +16,22 @@ export const getSession = async () => {
 export const generatePassword = () => {
   return Math.floor(Math.random() * 1000 + 1000).toString();
 };
+
+export const empTypes = (empType: string) => {
+  switch (empType) {
+    case "FULL_TIME":
+      return "Full Time";
+
+    case "PART_TIME":
+      return "Part Time";
+
+    case "CONTRACT":
+      return "Contract";
+
+    case "INTERNSHIP":
+      return "Internship";
+
+    case "TEMPORARY":
+      return "Temporary";
+  }
+};

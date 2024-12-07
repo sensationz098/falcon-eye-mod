@@ -6,6 +6,11 @@ const page = async () => {
   const employees = await prisma.employee.findMany({
     select: {
       id: true,
+      user: {
+        select: {
+          name: true,
+        },
+      },
       name: true,
       email: true,
       primary_contact: true,

@@ -35,3 +35,10 @@ export const empTypes = (empType: string) => {
       return "Temporary";
   }
 };
+
+export const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+  }).format(amount);
+};

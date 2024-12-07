@@ -1,7 +1,11 @@
 "use server";
 
 import prisma from "@/db/prisma";
-import { UserSchemaType, EmployeeSchemaType } from "@/types";
+import {
+  UserSchemaType,
+  EmployeeSchemaType,
+  CreateSalarySchemaType,
+} from "@/types";
 import { revalidatePath } from "next/cache";
 
 export const AddUserAction = async (values: UserSchemaType) => {
@@ -65,5 +69,52 @@ export const createEmployee = async (
       return { status: false, error: err.message };
     }
     return { status: false, error: "Something went wrong" };
+  }
+};
+
+export const createSalary = async (
+  values: CreateSalarySchemaType,
+  id: string,
+) => {
+  try {
+    values.basic_salary = Number(values.basic_salary);
+    values.HRA = Number(values.HRA);
+    values.medical = Number(values.medical);
+    values.convenience = Number(values.convenience);
+    values.other_allowences = Number(values.other_allowences);
+    values.deducation = Number(values.deducation);
+
+    const gross_salary =
+      (values.basic_salary +
+        values.HRA +
+        values.medical +
+        values.convenience +
+        values.other_allowences) *
+      12;
+
+    const net_salary =
+      values.basic_salary -
+      (values.deducation +
+        values.HRA +
+        values.medical +
+        values.convenience +
+        values.other_allowences);
+
+    await prisma.payroll.create({
+      data: {
+        basic_salary: values.basic_salary,
+        HRA: values.HRA,
+        medical: values.medical,
+        convenience: values.convenience,
+        other_allowences: values.other_allowences,
+        deducation: values.deducation,
+        gross_salary: gross_salary,
+        net_salary: net_salary,
+        empID: id,
+      },
+    });
+  } catch (err: unknown | Error) {
+    if (err instanceof Error) return { error: err.message };
+    return { errorL: "Something went wrong" };
   }
 };

@@ -24,6 +24,9 @@ export type EmployeeColumnType = {
   department: string;
   employement_type: string;
   userID: string;
+  user: {
+    name: string;
+  };
 };
 
 export const EmployeeColumn: ColumnDef<EmployeeColumnType>[] = [
@@ -38,6 +41,10 @@ export const EmployeeColumn: ColumnDef<EmployeeColumnType>[] = [
   {
     accessorKey: "employee_id",
     header: "Employee ID",
+  },
+  {
+    accessorKey: "user.name",
+    header: "Username",
   },
   {
     accessorKey: "name",

@@ -58,3 +58,14 @@ export const EmployeeSchema = z.object({
 });
 
 export type EmployeeSchemaType = z.infer<typeof EmployeeSchema>;
+
+export const CreateSalaySchema = z.object({
+  basic_salary: z.union([z.string(), z.number()]),
+  HRA: z.union([z.string(), z.number()]),
+  medical: z.union([z.string(), z.number()]),
+  convenience: z.union([z.string(), z.number()]),
+  other_allowences: z.union([z.string(), z.number()]),
+  deducation: z.union([z.string(), z.number()]),
+});
+
+export type CreateSalarySchemaType = z.infer<typeof CreateSalaySchema>;

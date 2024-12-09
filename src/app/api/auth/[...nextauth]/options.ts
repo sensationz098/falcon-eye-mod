@@ -2,6 +2,7 @@ import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
+import prisma from "@/db/prisma";
 
 export const AuthOptions: NextAuthOptions = {
   providers: [
@@ -28,17 +29,23 @@ export const AuthOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        const user = {
-          id: "1",
-          name: "Admin",
-          email: "admin@gg.com",
-          password: "1234",
-          role: "Admin",
-        };
+        // const user = {
+        //   id: "1",
+        //   name: "Admin",
+        //   email: "admin@gg.com",
+        //   password: "1234",
+        //   role: "Admin",
+        // };
+
+        const user = await prisma.user.findFirst({
+          where: {
+            email: credentials?.email,
+          },
+        });
 
         if (
-          credentials?.email === user.email &&
-          credentials?.password === user.password
+          credentials?.email === user?.email &&
+          credentials?.password === user?.password
         ) {
           return user;
         } else {

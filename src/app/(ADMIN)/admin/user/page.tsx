@@ -17,12 +17,11 @@ const page = async () => {
 
   return (
     <div>
-      <h1>user page</h1>
-      <AddUser />
-
+      <div className="flex flex-1 justify-around md:justify-between">
+        <h1 className="py-2">Total number of users - {users.length}</h1>
+        <AddUser />
+      </div>
       <div>
-        <h1>Total number of users - {users.length}</h1>
-
         <DataTable columns={UserColumn} data={users} />
       </div>
     </div>

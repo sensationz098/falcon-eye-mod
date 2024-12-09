@@ -69,3 +69,28 @@ export const CreateSalaySchema = z.object({
 });
 
 export type CreateSalarySchemaType = z.infer<typeof CreateSalaySchema>;
+
+export const BankAccountSchema = z.object({
+  account_holder_name: z
+    .string()
+    .trim()
+    .toUpperCase()
+    .min(2, "Name must be at least 2 characters long"),
+  account_no: z
+    .string()
+    .trim()
+    .min(8, "Account no must be at least 8 characters long"),
+  bank_name: z
+    .string()
+    .trim()
+    .min(5, "Bank name must be at least 5 characters long"),
+  branch: z.string().trim().min(2, "Branch must be at least 2 characters long"),
+  IFSC_code: z
+    .string()
+    .trim()
+    .toUpperCase()
+    .min(8, "IFSC code must be at least 8 characters long"),
+  payID: z.string(),
+});
+
+export type CreateBankAccountSchemaType = z.infer<typeof BankAccountSchema>;

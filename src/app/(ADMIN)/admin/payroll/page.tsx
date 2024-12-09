@@ -17,6 +17,7 @@ const page = async () => {
       employee: {
         select: {
           name: true,
+          id: true,
         },
       },
     },
@@ -24,7 +25,7 @@ const page = async () => {
 
   return (
     <div>
-      <h1 className="text-center text-3xl font-bold">Payroll info</h1>
+      <h1 className="text-3xl font-bold">Payroll info</h1>
 
       <DataTable columns={PayrollColumn} data={payroll} />
     </div>

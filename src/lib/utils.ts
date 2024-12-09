@@ -42,3 +42,13 @@ export const formatCurrency = (amount: number) => {
     currency: "INR",
   }).format(amount);
 };
+
+export const formatNumber = (value: string, type: "aadhar" | "mobile") => {
+  switch (type) {
+    case "aadhar":
+      return `${value.slice(0, 4)}-${value.slice(4, 8)}-${value.slice(8, 12)} `;
+
+    case "mobile":
+      return `+91-${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(6, 10)}`;
+  }
+};

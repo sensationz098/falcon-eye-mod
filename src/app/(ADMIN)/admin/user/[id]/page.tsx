@@ -14,7 +14,8 @@ import {
 import { Button } from "@/components/ui/button";
 import UpdateUser from "@/components/ADMIN/UpdateUser";
 import CreateSalary from "@/components/ADMIN/CreateSalary";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatNumber } from "@/lib/utils";
+import CreateBankAccount from "@/components/ADMIN/CreateBankAccount";
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const _id = (await params).id;
@@ -40,8 +41,8 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
     );
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold">{user?.name}</h1>
+    <div className="">
+      {/* <h1 className="text-3xl font-bold">{user?.name}</h1> */}
       <Card>
         <CardHeader>
           <CardTitle>{user?.employee.name}</CardTitle>
@@ -66,8 +67,10 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
       )}
 
       {/* employee info */}
-      <div className="my-2">
-        <Table className="mt-4 max-w-[500px] table-auto rounded-[5px] border-t-2">
+      <div className="my-2 flex flex-col items-center justify-center px-16">
+        <h1 className="text-xl font-bold">Employee Information</h1>
+        <Table className="mt-4 border">
+          <TableCaption>Employee Information</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead>Information</TableHead>
@@ -101,7 +104,12 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
             <TableRow>
               <TableCell>Primary Contact</TableCell>
-              <TableCell>{user?.employee.primary_contact}</TableCell>
+              <TableCell>
+                {formatNumber(
+                  user?.employee.primary_contact as string,
+                  "mobile",
+                )}
+              </TableCell>
             </TableRow>
 
             <TableRow>
@@ -131,7 +139,9 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
             <TableRow>
               <TableCell>Aadhar No</TableCell>
-              <TableCell>{user?.employee.aadhar_card}</TableCell>
+              <TableCell>
+                {formatNumber(user?.employee.aadhar_card as string, "aadhar")}
+              </TableCell>
             </TableRow>
 
             <TableRow>
@@ -140,10 +150,9 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
             </TableRow>
           </TableBody>
         </Table>
+        {/* salary and bank account info */}
       </div>
-
-      {/* salary and bank account info */}
-      <div className="flex w-full">
+      <div className="mt-4 flex w-full flex-col gap-5 px-16 md:flex-row">
         {/* salary info */}
         {salary === null ? (
           <div>
@@ -152,8 +161,8 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
         ) : (
           <div className="my-3">
-            <h1>Employee Salary Details</h1>
-            <Table className="table-auto">
+            <h1 className="my-2">Employee Salary Details</h1>
+            <Table className="table-auto border">
               <TableCaption>Employee Salary Info</TableCaption>
               <TableHeader>
                 <TableRow>
@@ -163,8 +172,8 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
               </TableHeader>
               <TableBody>
                 <TableRow>
-                  <TableCell>id</TableCell>
-                  <TableCell>{salary?.empID}</TableCell>
+                  <TableCell>Employee Name</TableCell>
+                  <TableCell>{user?.employee.name}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Basic Salary</TableCell>
@@ -209,7 +218,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                   </TableCell>
                 </TableRow>
 
-                <TableRow>
+                <TableRow className="font-bold">
                   <TableCell>Net Salary</TableCell>
                   <TableCell>
                     {formatCurrency(salary?.net_salary ?? 0)}
@@ -221,23 +230,49 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
         )}
 
         {/* bank info */}
-        <div>
-          <Table>
-            <TableCaption>Bank Account Info</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Information</TableHead>
-                <TableHead>Details</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell>Paid</TableCell>
-                <TableCell>Credit Card</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </div>
+        {salary?.bank === null || salary === null ? (
+          <div className="pl-4">
+            <h1 className="">No bank details found</h1>
+            <CreateBankAccount id={salary?.id as string} />
+          </div>
+        ) : (
+          <div className="my-3">
+            <h1 className="my-2">Bank Account Details</h1>
+            <Table className="table-auto border">
+              <TableCaption>Bank Account Info</TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Information</TableHead>
+                  <TableHead>Details</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>Account Holder Name</TableCell>
+                  <TableCell>{salary?.bank?.account_holder_name}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Account Number</TableCell>
+                  <TableCell className="font-semibold">
+                    {salary?.bank?.account_no}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Bank Name</TableCell>
+                  <TableCell>{salary?.bank?.bank_name}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Branch</TableCell>
+                  <TableCell>{salary?.bank?.branch}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>IFSC Code</TableCell>
+                  <TableCell>{salary?.bank?.IFSC_code}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import {
   UserSchemaType,
   EmployeeSchemaType,
   CreateSalarySchemaType,
+  CreateBankAccountSchemaType,
 } from "@/types";
 import { revalidatePath } from "next/cache";
 
@@ -60,6 +61,7 @@ export const createEmployee = async (
         userID: id,
       },
     });
+    revalidatePath(`/admin/user/${id}`);
     return {
       status: true,
       message: "Employee created successfully",
@@ -113,8 +115,26 @@ export const createSalary = async (
         empID: id,
       },
     });
+
+    return { status: true, message: "Salary created successfully" };
   } catch (err: unknown | Error) {
     if (err instanceof Error) return { error: err.message };
-    return { errorL: "Something went wrong" };
+    return { error: "Something went wrong" };
+  }
+};
+
+export const CreateBankAccountAction = async (
+  values: CreateBankAccountSchemaType,
+) => {
+  try {
+    await prisma.bankAccount.create({
+      data: {
+        ...values,
+      },
+    });
+    return { status: true, message: "Bank account created successfully" };
+  } catch (err: unknown | Error) {
+    if (err instanceof Error) return { error: err.message };
+    return { error: "Something went wrong" };
   }
 };

@@ -1,6 +1,7 @@
 import { Calendar, Home, Inbox, LucideIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 const items: {
   title: string;
@@ -31,11 +32,14 @@ const items: {
 
 const Navbar = () => {
   return (
-    <header className="flex items-center justify-between p-4">
-      <div className="flex items-center gap-3">
-        <h1 className="text-center text-xl text-blue-500 md:text-red-400">
-          Falcon EYE EMS
-        </h1>
+    <header className="flex flex-col items-center gap-5 p-4 md:flex-row md:justify-between md:gap-2">
+      <div className="flex flex-col items-center gap-3 md:flex-row">
+        <div className="flex items-center justify-center gap-2">
+          <Image src={"/logo_new2.png"} alt="logo" width={50} height={50} />
+          <h1 className="text-center text-xl text-white">
+            Falcon <span className="text-primary">EYE</span> EMS
+          </h1>
+        </div>
 
         <nav className="flex flex-wrap items-center gap-2">
           {items.map((i) => {
@@ -50,7 +54,7 @@ const Navbar = () => {
         </nav>
       </div>
 
-      <div>
+      <div className="">
         <button className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700">
           Login
         </button>

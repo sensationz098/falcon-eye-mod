@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { createSalary } from "@/server/action";
+
 const CreateSalary = ({ _id }: { _id: string }) => {
   const form = useForm<CreateSalarySchemaType>({
     resolver: zodResolver(CreateSalaySchema),

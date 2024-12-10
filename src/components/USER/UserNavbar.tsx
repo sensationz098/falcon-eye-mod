@@ -1,40 +1,24 @@
-import { Calendar, Home, Inbox, LucideIcon } from "lucide-react";
-import { Button } from "./ui/button";
+import { Home, LucideIcon } from "lucide-react";
+import { Button } from "../ui/button";
 import Link from "next/link";
+import LogoutButton from "../ADMIN/LogoutButton";
 import Image from "next/image";
 import { getSession } from "@/lib/utils";
-import LogoutButton from "./ADMIN/LogoutButton";
 
-const items: {
+type UserNavbarType = {
   title: string;
-  icon: LucideIcon;
   url: string;
-}[] = [
-  {
-    title: "Home",
-    url: "/admin",
-    icon: Home,
-  },
-  {
-    title: "User",
-    url: "/admin/user",
-    icon: Inbox,
-  },
-  {
-    title: "Employee",
-    url: "/admin/employee",
-    icon: Inbox,
-  },
-  {
-    title: "Payroll",
-    url: "/admin/payroll",
-    icon: Calendar,
-  },
+  icon: LucideIcon;
+}[];
+
+const items: UserNavbarType = [
+  { title: "Home", url: "/user", icon: Home },
+  { title: "Profile", url: "/user/profile", icon: Home },
+  { title: "Work Report", url: "/user/work-report", icon: Home },
 ];
 
-const Navbar = async () => {
+const UserNavbar = async () => {
   const session = await getSession();
-  console.log(session?.user.id);
 
   return (
     <header className="flex flex-col items-center gap-5 p-4 md:flex-row md:justify-between md:gap-2">
@@ -59,11 +43,9 @@ const Navbar = async () => {
         </nav>
       </div>
 
-      <div className="">
-        <LogoutButton />
-      </div>
+      <div className="">{session && <LogoutButton />}</div>
     </header>
   );
 };
 
-export default Navbar;
+export default UserNavbar;

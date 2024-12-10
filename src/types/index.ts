@@ -94,3 +94,10 @@ export const BankAccountSchema = z.object({
 });
 
 export type CreateBankAccountSchemaType = z.infer<typeof BankAccountSchema>;
+
+export const CreateWorkReportSchema = z.object({
+  updated_At: z.date().default(() => new Date(Date.now())),
+  work: z.string().trim().min(2, "Report must be at least 2 characters long"),
+});
+
+export type CreateWorkReportType = z.infer<typeof CreateWorkReportSchema>;

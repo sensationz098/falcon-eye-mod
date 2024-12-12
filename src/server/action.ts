@@ -116,6 +116,7 @@ export const createSalary = async (
       },
     });
 
+    revalidatePath(`/admin/user/${id}`);
     return { status: true, message: "Salary created successfully" };
   } catch (err: unknown | Error) {
     if (err instanceof Error) return { error: err.message };
@@ -132,6 +133,7 @@ export const CreateBankAccountAction = async (
         ...values,
       },
     });
+    revalidatePath(`/admin/user/${values.payID}`);
     return { status: true, message: "Bank account created successfully" };
   } catch (err: unknown | Error) {
     if (err instanceof Error) return { error: err.message };

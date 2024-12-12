@@ -24,7 +24,7 @@ const UserNavbar = async () => {
     <header className="flex flex-col items-center gap-5 p-4 md:flex-row md:justify-between md:gap-2">
       <div className="flex flex-col items-center gap-3 md:flex-row">
         <div className="flex items-center justify-center gap-2">
-          <Image src={"/logo_new2.png"} alt="logo" width={50} height={50} />
+          <Image src={"/logo.png"} alt="logo" width={50} height={50} />
           <h1 className="text-center text-xl text-white">
             Falcon <span className="text-primary">EYE</span> EMS
           </h1>

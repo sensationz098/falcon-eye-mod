@@ -64,7 +64,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
         <div className="mt-2 flex flex-col gap-2 md:mx-5 md:mt-5 md:flex-row md:gap-4">
           <UpdateUser user={user} />
           <Button className="rounded-[5px]">
-            <Link href={`/admin/user/update/${user.employee.id}`}>
+            <Link href={`/admin/employee/update/${user.employee.id}`}>
               Edit Employee
             </Link>
           </Button>

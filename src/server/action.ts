@@ -140,3 +140,12 @@ export const CreateBankAccountAction = async (
     return { error: "Something went wrong" };
   }
 };
+
+export const UpdateEmployee = async () => {
+  try {
+    return { status: true };
+  } catch (err: unknown | Error) {
+    if (err instanceof Error) return { status: false, error: err.message };
+    return { status: false, error: "Something went wrong" };
+  }
+};

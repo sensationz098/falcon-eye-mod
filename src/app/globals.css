@@ -88,3 +88,110 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .btn {
+    @apply bg-black text-white px-4 py-2 rounded-[.3rem] font-medium inline-flex items-center justify-center tracking-tight;
+  }
+
+  .btn-primary {
+    @apply bg-black text-white;
+  }
+
+  .btn-text {
+    @apply text-black bg-transparent;
+  }
+
+  .logo-ticker-image {
+    @apply h-10 w-auto;
+  }
+
+  .masking-effect {
+    mask-image: linear-gradient(to right, transparent, black, transparent);
+  }
+
+  .masking-effect-topBottom {
+    mask-image: linear-gradient(to top, transparent, black, transparent);
+  }
+
+  .tag {
+    @apply text-sm inline-flex border border-[#222]/10 px-3 py-1 rounded-lg tracking-tight;
+  }
+
+  .section-title {
+    @apply text-center text-3xl md:text-[54px] md:leading-[60px] font-bold tracking-tighter bg-gradient-to-b from-black to-[#001E80] text-transparent bg-clip-text;
+  }
+
+  .section-description {
+    @apply text-center text-[20px] leading-[30px] tracking-tight text-[#010D3E];
+  }
+
+  .rangeela {
+    background: linear-gradient(
+      to right,
+      #dd7ddf,
+      #e1cd86,
+      #bbcd92,
+      #71c2ef,
+      #3bffff,
+      #dd7ddf
+    );
+  }
+
+  .section-heading {
+    @apply max-w-[540px] mx-auto;
+  }
+
+  .card {
+    @apply p-10 border rounded-3xl shadow-md max-w-xs w-full;
+  }
+
+  .navBarStyle-box {
+    /* border: 2px solid red; */
+    display: flex;
+    width: 70%;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.974);
+    margin-top: 2.8rem;
+    /* left: -100vh;   */
+  }
+
+  .navBarStyle {
+    /* border: 2px solid red; */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 6rem;
+    width: 100%;
+    gap: 2rem;
+  }
+
+  .navBarStyle a {
+    cursor: pointer;
+  }
+
+  .isActive {
+    transform: rotate(90deg);
+    transition: 0.2s;
+  }
+
+  .isinActive {
+    transform: rotate(0deg);
+    transition: 0.2s;
+  }
+
+  .hamburger {
+    cursor: pointer;
+  }
+  .input-box {
+    @apply bg-[transparent] flex px-1 py-2 pl-2 rounded-[.2rem] text-slate-600 border-[1px] border-[rgba(0,0,0,0.2)] hover:border-[rgba(0,0,0,0.6)];
+  }
+  .login-input {
+    @apply w-[15rem] bg-[transparent] pl-3 outline-none bg-gradient-to-r from-[#4c6ef5] to-[#d290f1] text-transparent bg-clip-text font-medium placeholder-gray-400;
+  }
+
+  .bird {
+    @apply w-8 absolute;
+  }
+}

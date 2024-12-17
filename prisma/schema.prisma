@@ -52,6 +52,8 @@ model Employee {
   user   User   @relation(fields: [userID], references: [id], onDelete: Cascade)
 
   payroll Payroll?
+  leave   LeaveRequest[]
+  bank    BankAccount?
 
   @@index([id, email, userID])
 }
@@ -73,8 +75,6 @@ model Payroll {
   empID    String   @unique @db.ObjectId
   employee Employee @relation(fields: [empID], references: [id], onDelete: Cascade)
 
-  bank BankAccount?
-
   @@index([id, empID])
 }
 
@@ -89,10 +89,10 @@ model BankAccount {
   created_At DateTime @default(now())
   updated_At DateTime @updatedAt
 
-  payID   String  @unique @db.ObjectId
-  payroll Payroll @relation(fields: [payID], references: [id], onDelete: Cascade)
+  empID    String   @unique @db.ObjectId
+  employee Employee @relation(fields: [empID], references: [id], onDelete: Cascade)
 
-  @@index([id, payID])
+  @@index([id, empID])
 }
 
 model WorkReport {
@@ -104,6 +104,34 @@ model WorkReport {
   user   User   @relation(fields: [userID], references: [id], onDelete: Cascade)
 
   @@index([id, userID])
+}
+
+model LeaveRequest {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  emp_name   String
+  start_date DateTime
+  end_date   DateTime?
+  reason     String
+
+  half_day   String
+  approval   Boolean          @default(false)
+  leave_type LeaveRequestType
+  created_At DateTime         @default(now())
+
+  emp_ID   String   @db.ObjectId
+  employee Employee @relation(fields: [emp_ID], references: [id], onDelete: Cascade)
+
+  @@index([id, emp_ID])
+}
+
+enum LeaveRequestType {
+  PAID
+  SICK
+  CASUAL
+  MATERNITY
+  SHORT
+  OTHER
 }
 
 enum Role {

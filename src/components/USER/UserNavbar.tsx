@@ -15,6 +15,7 @@ const items: UserNavbarType = [
   { title: "Home", url: "/user", icon: Home },
   { title: "Profile", url: "/user/profile", icon: Home },
   { title: "Work Report", url: "/user/work-report", icon: Home },
+  { title: "Leave Request", url: "/user/leave-request", icon: Home },
 ];
 
 const UserNavbar = async () => {

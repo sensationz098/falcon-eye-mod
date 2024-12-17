@@ -35,7 +35,7 @@ const CreateBankAccount = ({ id }: { id: string }) => {
       bank_name: "",
       branch: "",
       IFSC_code: "",
-      payID: id,
+      empID: id,
     },
   });
 

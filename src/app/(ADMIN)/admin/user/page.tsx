@@ -6,12 +6,12 @@ import AddUser from "@/components/ADMIN/AddUser";
 const page = async () => {
   const users = await prisma.user.findMany({
     select: {
+      id: true,
       name: true,
       email: true,
-      role: true,
-      id: true,
-      created_At: true,
       password: true,
+      role: true,
+      created_At: true,
     },
   });
 

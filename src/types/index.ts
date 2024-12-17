@@ -90,7 +90,7 @@ export const BankAccountSchema = z.object({
     .trim()
     .toUpperCase()
     .min(8, "IFSC code must be at least 8 characters long"),
-  payID: z.string(),
+  empID: z.string(),
 });
 
 export type CreateBankAccountSchemaType = z.infer<typeof BankAccountSchema>;
@@ -147,3 +147,14 @@ export const UpdateEmployeeSchema = z.object({
 });
 
 export type UpdateEmployeeSchemaType = z.infer<typeof UpdateEmployeeSchema>;
+
+export const LeaveRequestSchema = z.object({
+  emp_name: z.string().trim().min(2, "Name must be at least 2 characters long"),
+  start_date: z.date(),
+  end_date: z.date().optional(),
+  reason: z.string().trim().min(2, "Reason must be at least 2 characters long"),
+  leave_type: z.enum(["PAID", "SICK", "CASUAL", "MATERNITY", "SHORT", "OTHER"]),
+  half_day: z.enum(["FIRST_HALF", "SECOND_HALF"]),
+});
+
+export type LeaveRequestSchemaType = z.infer<typeof LeaveRequestSchema>;

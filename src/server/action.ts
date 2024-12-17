@@ -133,7 +133,7 @@ export const CreateBankAccountAction = async (
         ...values,
       },
     });
-    revalidatePath(`/admin/user/${values.payID}`);
+    revalidatePath(`/admin/user/${values.empID}`);
     return { status: true, message: "Bank account created successfully" };
   } catch (err: unknown | Error) {
     if (err instanceof Error) return { error: err.message };

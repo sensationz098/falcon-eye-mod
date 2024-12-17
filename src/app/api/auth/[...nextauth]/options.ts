@@ -37,6 +37,14 @@ export const AuthOptions: NextAuthOptions = {
           },
         });
 
+        // const user = {
+        //   id: "1",
+        //   name: "admin",
+        //   email: "admin@gmail.com",
+        //   password: "admin",
+        //   role: "ADMIN",
+        // };
+
         if (
           credentials?.email === user?.email &&
           credentials?.password === user?.password

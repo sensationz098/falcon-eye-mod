@@ -1,6 +1,10 @@
 "use server";
 import prisma from "@/db/prisma";
-import { CreateWorkReportType, UserSchemaType } from "@/types";
+import {
+  CreateWorkReportType,
+  LeaveRequestSchemaType,
+  UserSchemaType,
+} from "@/types";
 import { revalidatePath } from "next/cache";
 
 export const UpdateUserAction = async (values: UserSchemaType, id: string) => {
@@ -36,5 +40,27 @@ export const UpdateWorkReport = async (
       return { error: err.message };
     }
     return { error: "Something went wrong" };
+  }
+};
+
+export const LeaveRequestAction = async (
+  values: LeaveRequestSchemaType,
+  name: string,
+  id: string,
+) => {
+  try {
+    await prisma.leaveRequest.create({
+      data: {
+        ...values,
+        emp_name: name,
+        emp_ID: id,
+      },
+    });
+
+    revalidatePath("/admin/leave");
+    return { status: true, message: "Leave request sent successfully" };
+  } catch (err: unknown | Error) {
+    if (err instanceof Error) return { error: err.message };
+    console.log("something went wrong");
   }
 };

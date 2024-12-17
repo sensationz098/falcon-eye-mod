@@ -1,13 +1,5 @@
-import Link from "next/link";
-export default function Home() {
-  return (
-    <div className="flex flex-col items-center justify-center">
-      <h1>
-        <Link href="/admin">Admin</Link>
-      </h1>
-      <h1>
-        <Link href="/user">user</Link>
-      </h1>
-    </div>
-  );
+import Home from "@/components/sections/Home";
+
+export default function Page() {
+  return <Home />;
 }

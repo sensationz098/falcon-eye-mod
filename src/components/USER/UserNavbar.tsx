@@ -22,7 +22,7 @@ const UserNavbar = async () => {
   const session = await getSession();
 
   return (
-    <header className="flex flex-col items-center gap-5 p-4 md:flex-row md:justify-between md:gap-2">
+    <header className="mx-3 flex flex-col items-center gap-5 p-4 md:mx-5 md:flex-row md:justify-between md:gap-2">
       <div className="flex flex-col items-center gap-3 md:flex-row">
         <div className="flex items-center justify-center gap-2">
           <Image src={"/logo.png"} alt="logo" width={50} height={50} />

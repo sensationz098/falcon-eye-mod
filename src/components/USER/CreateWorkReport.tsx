@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -79,7 +80,9 @@ const CreateWorkReport = ({ _id }: { _id: string }) => {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit">Submit</Button>
+                  <DialogClose asChild>
+                    <Button type="submit">Submit</Button>
+                  </DialogClose>
                 </form>
               </Form>
             </DialogDescription>

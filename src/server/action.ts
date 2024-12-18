@@ -149,3 +149,28 @@ export const UpdateEmployee = async () => {
     return { status: false, error: "Something went wrong" };
   }
 };
+
+export const UpdateLeaveRequest = async ({
+  id,
+  type,
+}: {
+  id: string;
+  type: "ACCEPT" | "PENDING" | "REJECT";
+}) => {
+  try {
+    await prisma.leaveRequest.update({
+      where: {
+        id: id,
+      },
+      data: {
+        approval: type,
+      },
+    });
+
+    revalidatePath("/admin/leave", "page");
+    revalidatePath("/admin", "page");
+  } catch (err: unknown | Error) {
+    if (err instanceof Error) return { status: false, error: err.message };
+    return { status: false, error: "Something went wrong" };
+  }
+};

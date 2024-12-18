@@ -27,7 +27,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function PayrollDataTable<TData, TValue>({
+export function LeaveRequestDataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -51,10 +51,10 @@ export function PayrollDataTable<TData, TValue>({
         <Input
           placeholder="Filter Name..."
           value={
-            (table.getColumn("employee")?.getFilterValue() as string) ?? ""
+            (table.getColumn("emp_name")?.getFilterValue() as string) ?? ""
           }
           onChange={(event) =>
-            table.getColumn("employee")?.setFilterValue(event.target.value)
+            table.getColumn("emp_name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

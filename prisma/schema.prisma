@@ -115,7 +115,7 @@ model LeaveRequest {
   reason     String
 
   half_day   String
-  approval   Boolean          @default(false)
+  approval   ApprovalStatus   @default(PENDING)
   leave_type LeaveRequestType
   created_At DateTime         @default(now())
 
@@ -150,4 +150,10 @@ enum EmployeeType {
   INTERNSHIP
   TEMPORARY
   CONTRACT
+}
+
+enum ApprovalStatus {
+  ACCEPT
+  PENDING
+  REJECT
 }

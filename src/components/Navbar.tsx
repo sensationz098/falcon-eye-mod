@@ -39,7 +39,7 @@ const items: {
 
 const Navbar = async () => {
   const leave_request = await prisma.leaveRequest.count({
-    where: { approval: false },
+    where: { approval: "PENDING" },
   });
 
   return (
@@ -58,7 +58,7 @@ const Navbar = async () => {
               <Link key={i.title} href={i.url}>
                 <Button className="text-center">
                   {i.title} <i.icon />
-                  {i.title === "Leave Request" ? (
+                  {i.title === "Leave Request" && leave_request !== 0 ? (
                     <span className="size-5 rounded-full bg-red-400 text-sm text-white">
                       {leave_request}
                     </span>

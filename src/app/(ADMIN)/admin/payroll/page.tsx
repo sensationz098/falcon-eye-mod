@@ -1,6 +1,6 @@
 import prisma from "@/db/prisma";
 import { PayrollColumn } from "@/components/tables/PayrollColumn";
-import { DataTable } from "@/components/ui/DataTable";
+import { PayrollDataTable } from "@/components/tables/PayrollDataTable";
 
 const page = async () => {
   const payroll = await prisma.payroll.findMany({
@@ -27,7 +27,7 @@ const page = async () => {
     <div>
       <h1 className="text-3xl font-bold">Payroll info</h1>
 
-      <DataTable columns={PayrollColumn} data={payroll} />
+      <PayrollDataTable columns={PayrollColumn} data={payroll} />
     </div>
   );
 };

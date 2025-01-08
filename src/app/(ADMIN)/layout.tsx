@@ -1,10 +1,12 @@
-import Navbar from "@/components/Navbar";
+import { Navbar } from "@/components";
+import { ReactNode } from "react";
+import { AdminNavbarProps } from "@/constant";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <>
-      <Navbar />
-      <main className="container mx-auto p-2">{children}</main>
+      <Navbar navbarProps={AdminNavbarProps} />
+      {children}
     </>
   );
 }

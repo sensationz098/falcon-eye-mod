@@ -1,5 +1,5 @@
 const page = () => {
-  return <div>payroll page</div>;
+  return <div>leave request page</div>;
 };
 
 export default page;

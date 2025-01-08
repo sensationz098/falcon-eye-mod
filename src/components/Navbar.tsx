@@ -1,37 +1,10 @@
-import { Calendar, Home, Inbox, LucideIcon } from "lucide-react";
+import Image from "next/image";
+import AuthButtons from "./AuthButtons";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import Image from "next/image";
-import LogoutButton from "./ADMIN/LogoutButton";
+import type { NavbarPropsType } from "@/constant";
 
-const items: {
-  title: string;
-  icon: LucideIcon;
-  url: string;
-}[] = [
-  {
-    title: "Home",
-    url: "/admin",
-    icon: Home,
-  },
-  {
-    title: "User",
-    url: "/admin/user",
-    icon: Inbox,
-  },
-  {
-    title: "Employee",
-    url: "/admin/employee",
-    icon: Inbox,
-  },
-  {
-    title: "Payroll",
-    url: "/admin/payroll",
-    icon: Calendar,
-  },
-];
-
-const Navbar = async () => {
+const Navbar = ({ navbarProps }: { navbarProps: NavbarPropsType[] }) => {
   return (
     <header className="flex flex-col items-center gap-5 p-4 md:flex-row md:justify-between md:gap-2">
       <div className="flex flex-col items-center gap-3 md:flex-row">
@@ -43,20 +16,19 @@ const Navbar = async () => {
         </div>
 
         <nav className="flex flex-wrap items-center gap-2">
-          {items.map((i) => {
+          {navbarProps.map((i, index) => {
             return (
-              <Link key={i.title} href={i.url}>
+              <Link key={index} href={i.url}>
                 <Button className="text-center">
-                  {i.title} <i.icon />
+                  {i.title} <i.Icon />
                 </Button>
               </Link>
             );
           })}
         </nav>
       </div>
-
       <div className="">
-        <LogoutButton />
+        <AuthButtons />
       </div>
     </header>
   );

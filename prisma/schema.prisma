@@ -3,31 +3,30 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  id       String @id @default(cuid())
   name     String
   email    String @unique
   password String
-  role     Role   @default(USER)
+  role     Role
 
-  created_At DateTime @default(now())
-  updated_At DateTime @updatedAt
-
-  employee Employee?
-  work     WorkReport[]
+  created_At DateTime     @default(now())
+  updated_At DateTime     @updatedAt
+  Employee   Employee?
+  work       WorkReport[]
 
   @@index([id, email])
 }
 
 model Employee {
-  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  id                  String   @id @default(cuid())
   employee_id         String
   name                String
-  email               String   @unique
+  email               String
   address             String
   gender              Gender
   date_of_birth       DateTime
@@ -48,16 +47,18 @@ model Employee {
   created_At DateTime @default(now())
   updated_At DateTime @updatedAt
 
-  userID String @unique @db.ObjectId
+  userID String @unique
   user   User   @relation(fields: [userID], references: [id], onDelete: Cascade)
 
   payroll Payroll?
+  bank    BankAccount?
+  leave   LeaveRequest[]
 
   @@index([id, email, userID])
 }
 
 model Payroll {
-  id               String @id @default(auto()) @map("_id") @db.ObjectId
+  id               String @id @default(cuid())
   basic_salary     Int
   gross_salary     Int
   net_salary       Int
@@ -70,16 +71,14 @@ model Payroll {
   created_At DateTime @default(now())
   updated_At DateTime @updatedAt
 
-  empID    String   @unique @db.ObjectId
+  empID    String   @unique
   employee Employee @relation(fields: [empID], references: [id], onDelete: Cascade)
-
-  bank BankAccount?
 
   @@index([id, empID])
 }
 
 model BankAccount {
-  id                  String @id @default(auto()) @map("_id") @db.ObjectId
+  id                  String @id @default(cuid())
   account_holder_name String
   account_no          String
   bank_name           String
@@ -89,21 +88,49 @@ model BankAccount {
   created_At DateTime @default(now())
   updated_At DateTime @updatedAt
 
-  payID   String  @unique @db.ObjectId
-  payroll Payroll @relation(fields: [payID], references: [id], onDelete: Cascade)
+  empID    String   @unique
+  employee Employee @relation(fields: [empID], references: [id], onDelete: Cascade)
 
-  @@index([id, payID])
+  @@index([id, empID])
 }
 
 model WorkReport {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  id         Int      @id @default(autoincrement())
   updated_At DateTime @default(now())
   work       String
 
-  userID String @unique @db.ObjectId
+  userID String
   user   User   @relation(fields: [userID], references: [id], onDelete: Cascade)
 
   @@index([id, userID])
+}
+
+model LeaveRequest {
+  id Int @id @default(autoincrement())
+
+  emp_name   String
+  start_date DateTime
+  end_date   DateTime?
+  reason     String
+
+  half_day   String
+  approval   ApprovalStatus   @default(PENDING)
+  leave_type LeaveRequestType
+  created_At DateTime         @default(now())
+
+  emp_ID   String
+  employee Employee @relation(fields: [emp_ID], references: [id], onDelete: Cascade)
+
+  @@index([id, emp_ID])
+}
+
+enum LeaveRequestType {
+  PAID
+  SICK
+  CASUAL
+  MATERNITY
+  SHORT
+  OTHER
 }
 
 enum Role {
@@ -122,4 +149,10 @@ enum EmployeeType {
   INTERNSHIP
   TEMPORARY
   CONTRACT
+}
+
+enum ApprovalStatus {
+  ACCEPT
+  PENDING
+  REJECT
 }

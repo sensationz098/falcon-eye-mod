@@ -31,17 +31,16 @@ export const AuthOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        // const user = {
-        //   id: "1",
-        //   name: "Admin",
-        //   email: "admin@gg.com",
-        //   password: "1234",
-        //   role: "Admin",
-        // };
-
         const user = await prisma.user.findFirst({
           where: {
             email: credentials?.email,
+          },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            password: true,
+            role: true,
           },
         });
 

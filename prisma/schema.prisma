@@ -14,10 +14,14 @@ model User {
   password String
   role     Role
 
-  created_At DateTime     @default(now())
-  updated_At DateTime     @updatedAt
-  Employee   Employee?
-  work       WorkReport[]
+  created_At DateTime @default(now())
+  updated_At DateTime @updatedAt
+
+  Employee Employee?
+  work     WorkReport[]
+  payroll  Payroll?
+  bank     BankAccount?
+  leave    LeaveRequest[]
 
   @@index([id, email])
 }
@@ -35,7 +39,7 @@ model Employee {
   emergency_contact_2 String?
   city                String?  @default("New Delhi")
   country             String?  @default("India")
-  aadhar_card         String?
+  aadhar_no           String?
   PAN_no              String?
 
   branch           String       @default("New Delhi")
@@ -49,10 +53,6 @@ model Employee {
 
   userID String @unique
   user   User   @relation(fields: [userID], references: [id], onDelete: Cascade)
-
-  payroll Payroll?
-  bank    BankAccount?
-  leave   LeaveRequest[]
 
   @@index([id, email, userID])
 }
@@ -71,10 +71,10 @@ model Payroll {
   created_At DateTime @default(now())
   updated_At DateTime @updatedAt
 
-  empID    String   @unique
-  employee Employee @relation(fields: [empID], references: [id], onDelete: Cascade)
+  userID String @unique
+  user   User   @relation(fields: [userID], references: [id], onDelete: Cascade)
 
-  @@index([id, empID])
+  @@index([id, userID])
 }
 
 model BankAccount {
@@ -88,10 +88,10 @@ model BankAccount {
   created_At DateTime @default(now())
   updated_At DateTime @updatedAt
 
-  empID    String   @unique
-  employee Employee @relation(fields: [empID], references: [id], onDelete: Cascade)
+  userID String @unique
+  user   User   @relation(fields: [userID], references: [id], onDelete: Cascade)
 
-  @@index([id, empID])
+  @@index([id, userID])
 }
 
 model WorkReport {
@@ -118,10 +118,10 @@ model LeaveRequest {
   leave_type LeaveRequestType
   created_At DateTime         @default(now())
 
-  emp_ID   String
-  employee Employee @relation(fields: [emp_ID], references: [id], onDelete: Cascade)
+  userID String
+  user   User   @relation(fields: [userID], references: [id], onDelete: Cascade)
 
-  @@index([id, emp_ID])
+  @@index([id, userID])
 }
 
 enum LeaveRequestType {

@@ -50,11 +50,9 @@ export function PayrollDataTable<TData, TValue>({
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter Name..."
-          value={
-            (table.getColumn("employee")?.getFilterValue() as string) ?? ""
-          }
+          value={(table.getColumn("user")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("employee")?.setFilterValue(event.target.value)
+            table.getColumn("user")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

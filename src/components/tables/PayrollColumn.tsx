@@ -25,7 +25,7 @@ export type PayrollColumnType = {
   convenience: number | null;
   other_allowences: number | null;
   deducation: number | null;
-  employee: {
+  user: {
     name: string;
     id: string;
   };
@@ -44,7 +44,7 @@ export const PayrollColumn: ColumnDef<PayrollColumnType>[] = [
     accessorKey: "employee",
     header: "Employee Name",
     cell: ({ row }) => {
-      const { name } = row.original.employee;
+      const { name } = row.original.user;
       return <span>{name}</span>;
     },
   },
@@ -136,9 +136,7 @@ export const PayrollColumn: ColumnDef<PayrollColumnType>[] = [
             </DropdownMenuItem> */}
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <Link href={`/admin/user/${salary.employee.id}`}>
-                View Employee
-              </Link>
+              <Link href={`/admin/user/${salary.user.id}`}>View Employee</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -1,34 +1,10 @@
 # falcon eye ems mod with postgresql on 8/1/25
 
-```ts
-// export { default } from "next-auth/middleware";
-import { withAuth, NextRequestWithAuth } from "next-auth/middleware";
-import { NextResponse } from "next/server";
+1. payroll, salary,
+2. attendence
 
-export default withAuth(
-  function middleware(request: NextRequestWithAuth) {
-    if (
-      request.nextUrl.pathname.startsWith("/admin") &&
-      request.nextauth.token?.role !== "ADMIN"
-    ) {
-      return NextResponse.rewrite(new URL("/", request.url));
-    }
-    if (
-      request.nextUrl.pathname.startsWith("/user") &&
-      request.nextauth.token?.role !== "USER" &&
-      request.nextauth.token?.role !== "ADMIN"
-    ) {
-      return NextResponse.rewrite(new URL("/", request.url));
-    }
-  },
-  {
-    callbacks: {
-      authorized: ({ token }) => !!token,
-    },
-  },
-);
+   - leave, paid leave,sick leave
 
-export const config = {
-  matcher: ["/admin", "/user"],
-};
-```
+3. birthday events, important events, create in-house events
+
+create, user, employee, bank details, payroll

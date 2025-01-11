@@ -41,8 +41,8 @@ export const PayrollColumn: ColumnDef<PayrollColumnType>[] = [
     },
   },
   {
-    accessorKey: "employee",
-    header: "Employee Name",
+    accessorKey: "user",
+    header: "User Name",
     cell: ({ row }) => {
       const { name } = row.original.user;
       return <span>{name}</span>;

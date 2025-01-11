@@ -68,3 +68,19 @@ export const getAllPayroll = async () => {
     },
   });
 };
+
+export const getAllLeaveRequest = async () => {
+  return await prisma.leaveRequest.findMany({
+    select: {
+      id: true,
+      emp_name: true,
+      start_date: true,
+      end_date: true,
+      leave_type: true,
+      half_day: true,
+      created_At: true,
+      reason: true,
+      approval: true,
+    },
+  });
+};

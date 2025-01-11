@@ -16,6 +16,13 @@ export const AdminNavbarProps: NavbarPropsType[] = [
   { title: "Attendece", url: "/admin/attendence", Icon: Calendar },
 ];
 
+export const UserNavbarProps: NavbarPropsType[] = [
+  { title: "Home", url: "/user", Icon: Home },
+  { title: "Profile", url: "/user/profile", Icon: Home },
+  { title: "Work Report", url: "/user/work-report", Icon: Home },
+  { title: "Leave Request", url: "/user/leave-request", Icon: Home },
+];
+
 export const IndianStates: Readonly<string[]> = [
   "New Delhi",
   "Andaman and Nicobar Islands",

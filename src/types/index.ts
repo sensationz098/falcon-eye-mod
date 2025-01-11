@@ -129,7 +129,6 @@ export const CreateWorkReportSchema = z.object({
 export type CreateWorkReportType = z.infer<typeof CreateWorkReportSchema>;
 
 export const LeaveRequestSchema = z.object({
-  emp_name: z.string().trim().min(2, "Name must be at least 2 characters long"),
   start_date: z.date(),
   end_date: z.date().optional(),
   reason: z.string().trim().min(2, "Reason must be at least 2 characters long"),

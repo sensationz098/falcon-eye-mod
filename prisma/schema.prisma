@@ -153,6 +153,7 @@ enum EmployeeType {
 
 enum ApprovalStatus {
   ACCEPT
-  PENDING
   REJECT
+  PENDING
+  CANCEL
 }

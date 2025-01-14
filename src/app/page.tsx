@@ -1,7 +1,5 @@
-export default async function Home() {
-  return (
-    <div>
-      <h1>Home landing page</h1>
-    </div>
-  );
+import Home from "@/components/sections/Home";
+
+export default async function Page() {
+  return <Home />;
 }

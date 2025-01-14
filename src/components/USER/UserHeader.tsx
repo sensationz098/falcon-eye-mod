@@ -9,17 +9,12 @@ const UserHeader = async ({ _id }: { _id: string }) => {
         <h1 className="text-xl">
           Hello, <span className="font-bold uppercase">{user?.name}</span>
         </h1>
+
         <p className="capitalize">
           {user?.designation}, {user?.department}
         </p>
 
-        <p>
-          joined since{" "}
-          {formatDate(
-            user?.date_of_joining ? user?.date_of_joining : "not available",
-            "PPP",
-          )}
-        </p>
+        <p>joined since {formatDate(user?.date_of_joining as Date, "PPP")}</p>
       </section>
     </div>
   );

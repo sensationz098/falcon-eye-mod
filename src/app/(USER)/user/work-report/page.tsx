@@ -1,5 +1,6 @@
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -10,11 +11,17 @@ import { Button } from "@/components/ui/button";
 import { getAllWorkReport } from "@/db/UserDbQueries";
 import { getSession } from "@/lib/utils";
 import { formatDate } from "date-fns";
+import { deleteWorkReport } from "@/server/USER/userServerActions";
+
+// import { deleteWorkReport } from "@/server/USER/userServerActions";
 
 const page = async () => {
   const session = await getSession();
 
-  const workReport = await getAllWorkReport(session?.user.id as string);
+  const workReport = await getAllWorkReport({
+    _id: session?.user.id as string,
+    type: "ALL",
+  });
 
   if (workReport.length === 0) return <h1>no work report found</h1>;
 
@@ -59,6 +66,10 @@ const UpdateReportById = ({ work }: { work: string }) => (
       <DialogHeader>
         <DialogTitle>Enter Your Work Report</DialogTitle>
         <DialogDescription>{work}</DialogDescription>
+
+        <DialogClose asChild>
+          <Button>edit</Button>
+        </DialogClose>
       </DialogHeader>
     </DialogContent>
   </Dialog>

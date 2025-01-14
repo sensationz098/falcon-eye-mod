@@ -6,6 +6,7 @@ import { getSession } from "@/lib/utils";
 
 const page = async () => {
   const session = await getSession();
+
   return (
     <div>
       <UserHeader _id={session?.user.id as string} />

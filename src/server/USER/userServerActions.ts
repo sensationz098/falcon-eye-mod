@@ -46,3 +46,13 @@ export const createWorkReport = async (
     return { status: false, error: "Internal server error" };
   }
 };
+
+export const deleteWorkReport = async (id: number) => {
+  await prisma.workReport.delete({
+    where: {
+      id: id,
+    },
+  });
+  revalidatePath("/user/work-report", "page");
+  return;
+};

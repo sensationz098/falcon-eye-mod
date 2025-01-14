@@ -84,3 +84,16 @@ export const getAllLeaveRequest = async () => {
     },
   });
 };
+
+export const getStatsCard = async () => {
+  const totalEmployee = await prisma.employee.count();
+  const totalUsers = await prisma.user.count();
+  const totalBranches = await prisma.employee.findMany({
+    distinct: ["branch"],
+    select: {
+      branch: true,
+    },
+  });
+
+  return { totalEmployee, totalUsers, totalBranches };
+};

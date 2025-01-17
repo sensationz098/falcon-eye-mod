@@ -4,15 +4,15 @@ import { getSession } from "@/lib/utils";
 const page = async () => {
   const session = await getSession();
   return (
-    <div>
+    <div className="mx-8">
       <h1 className="text-3xl font-bold">Hello, {session?.user.name} </h1>
       <StatsCard />
-      <div className="flex w-full flex-col justify-start md:flex-1 md:flex-row md:justify-between md:px-10">
-        <div className="flex flex-1 flex-col gap-5 p-4 md:flex-row">
+      <div className="flex gap-4">
+        <div className="flex flex-1 gap-2">
           <PieCharts />
           <BarCharts />
         </div>
-        <div className="hidden pr-10 md:block">
+        <div className="">
           <RightSide />
         </div>
       </div>

@@ -13,7 +13,7 @@ import { format } from "date-fns";
 
 const page = async () => {
   const leaves = await getAllLeaveRequest();
-
+  console.log(leaves);
   if (leaves.length === 0) return <h1>no leave request found</h1>;
 
   return (

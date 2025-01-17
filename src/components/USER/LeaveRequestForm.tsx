@@ -37,7 +37,6 @@ const LeaveRequestForm = () => {
   const { toast } = useToast();
   const session = useSession();
 
-  console.log(session.data?.user);
   const form = useForm<LeaveRequestSchemaType>({
     resolver: zodResolver(LeaveRequestSchema),
     defaultValues: {

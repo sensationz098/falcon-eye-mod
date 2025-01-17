@@ -11,20 +11,26 @@ const WorkReport = async ({ userID }: { userID: string }) => {
 
       <div className="my-3 h-0.5 w-full bg-primary" />
       <div className="flex flex-col gap-5">
-        {work_report.map((i) => {
-          return (
-            <Card key={i.id}>
-              <CardHeader>
-                <CardTitle className="text-sm text-gray-500">
-                  {formatDate(i.updated_At, "PPP")}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="line-clamp-1">{i.work}</p>
-              </CardContent>
-            </Card>
-          );
-        })}
+        {work_report.length != 0 ? (
+          work_report.map((i) => {
+            return (
+              <Card key={i.id}>
+                <CardHeader>
+                  <CardTitle className="text-sm text-gray-500">
+                    {formatDate(i.updated_At, "PPP")}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="line-clamp-1">{i.work}</p>
+                </CardContent>
+              </Card>
+            );
+          })
+        ) : (
+          <div className="flex items-center justify-center">
+            <h1>No Work Report found</h1>
+          </div>
+        )}
       </div>
     </div>
   );

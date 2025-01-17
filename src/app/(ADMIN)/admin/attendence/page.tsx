@@ -1,42 +1,67 @@
-"use client";
+// export const dynamic = "force-dynamic";
 
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
-// import axios from "axios";
-// import { useEffect, useState } from "react";
+const Page = async () => {
+  // const username = "Sensationz:Sensationz:SENSATIONZ@123:true";
+  // const password = "";
 
-const Page = () => {
-  // const [data, setData] = useState({});
+  // const base64Auth = btoa(username + ":" + password);
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const res = await axios.get(
-  //         "https://api.etimeoffice.com/api/DownloadPunchData?Empcode=0001&FromDate=01/01/2025_09:00&ToDate=31/01/2025_23:59",
-  //         {
-  //           auth: {
-  //             username: "Sensationz:Sensationz:SENSATIONZ@123:true",
-  //             password: "",
-  //           },
-  //         },
-  //       );
+  const today = new Date(2025);
+  const startDate = `1/${today.getMonth() + 1}/${today.getFullYear()}`;
+  const lastDate = new Date(2025, 4, 0);
+  console.log("the last date", lastDate);
+  console.log(startDate);
 
-  //       setData(res.data);
-  //     } catch (err: Error | unknown) {
-  //       if (err instanceof Error) return console.log("error", err.message);
-  //       console.log("Internal server error");
-  //     }
-  //   }
+  // const res = await fetch(
+  //   `https://api.etimeoffice.com/api/DownloadPunchData?Empcode=ALL&FromDate=01/01/2025_01:00&ToDate=31/01/2025_00:00
+  //     `,
+  //   {
+  //     cache: "force-cache",
+  //     method: "GET",
+  //     headers: {
+  //       Authorization: "Basic " + base64Auth,
+  //       "Content-Type": "application/json",
+  //     },
+  //   },
+  // );
+  // const attendence = await res.json();
 
-  //   fetchData();
-  // }, []);
-
-  // console.log(data);
   return (
     <div>
-      <Button>Fetch data</Button>
-
-      {/* {data?.PunchData?.map((i) => <h1 key={i.PunchDate}>{i.PunchDate}</h1>)} */}
+      <Table>
+        <TableCaption>A list of Attendences</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Invoice</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Method</TableHead>
+            <TableHead>Amount</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {/* {attendence?.PunchData?.map((i) => {
+            return (
+              <TableRow key={i.PunchDate}>
+                <TableCell>{i.Empcode}</TableCell>
+                <TableCell>{i.Name}</TableCell>
+                <TableCell>{i.PunchDate}</TableCell>
+                <TableCell>{i.M_Flag ?? "NO "}</TableCell>
+              </TableRow>
+            );
+          })} */}
+        </TableBody>
+      </Table>
     </div>
   );
 };

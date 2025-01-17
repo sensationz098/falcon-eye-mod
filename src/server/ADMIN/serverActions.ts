@@ -7,6 +7,7 @@ import {
   EmployeeSchemaType,
   CreateSalarySchemaType,
   CreateBankAccountSchemaType,
+  HolidaySchemaType,
 } from "@/types";
 
 export const addUserAction = async (values: UserSchemaType) => {
@@ -108,6 +109,22 @@ export const createBankAccountDetails = async ({
 
     revalidatePath(`/admin/user/${id}`, "page");
     return { status: true, message: "Bank details created" };
+  } catch (err: Error | unknown) {
+    if (err instanceof Error) return { status: false, error: err.message };
+    return { status: false, error: "Internal server error" };
+  }
+};
+
+export const createHoliday = async (values: HolidaySchemaType) => {
+  try {
+    await prisma.holiday.create({
+      data: {
+        ...values,
+      },
+    });
+
+    revalidatePath("/admin/holidays", "page");
+    return { status: true, message: "Holiday created" };
   } catch (err: Error | unknown) {
     if (err instanceof Error) return { status: false, error: err.message };
     return { status: false, error: "Internal server error" };

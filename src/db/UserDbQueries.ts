@@ -94,3 +94,14 @@ export const getUserHeader = async (_id: string) => {
     },
   });
 };
+
+export const getHolidays = async () => {
+  return await prisma.holiday.findMany({
+    where: {
+      holiday_date: {
+        gte: new Date(),
+      },
+    },
+    take: 2,
+  });
+};

@@ -10,20 +10,28 @@ const LeaveRequest = async ({ userID }: { userID: string }) => {
 
       <div className="my-3 h-0.5 w-full bg-primary" />
       <div className="flex flex-col gap-5">
-        {leave_request.map((i) => {
-          return (
-            <Card key={i.id}>
-              <CardHeader>
-                <CardTitle className="text-sm text-gray-500">
-                  {formatDate(i.created_At, "PPP")}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="line-clamp-1">{i.approval}</p>
-              </CardContent>
-            </Card>
-          );
-        })}
+        {leave_request.length !== 0 ? (
+          leave_request.map((i) => {
+            return (
+              <Card key={i.id}>
+                <CardHeader>
+                  <CardTitle className="text-sm text-gray-500">
+                    {formatDate(i.start_date, "PPP")} -{" "}
+                    {formatDate(i.end_date as Date, "PPP")}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="flex items-center justify-between">
+                  <p className="line-clamp-1">{i.reason}</p>
+                  <p className="animate-pulse text-xs">{i.approval}</p>
+                </CardContent>
+              </Card>
+            );
+          })
+        ) : (
+          <div>
+            <h1>No Leave Request Found</h1>
+          </div>
+        )}
       </div>
     </div>
   );

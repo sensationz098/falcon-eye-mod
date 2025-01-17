@@ -1,4 +1,5 @@
 import { CreateHolidayForm } from "@/components";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -9,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getHolidays } from "@/db/AdminDbQueries";
+import { deleteHoliday } from "@/server/ADMIN/serverActions";
 
 import { format } from "date-fns";
 
@@ -27,6 +29,7 @@ const page = async () => {
               <TableHead>Date</TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Message</TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -37,6 +40,17 @@ const page = async () => {
                   <TableCell>{format(i.holiday_date, "PPP")}</TableCell>
                   <TableCell>{i.title}</TableCell>
                   <TableCell>{i.message}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant={"destructive"}
+                      onClick={async () => {
+                        "use server";
+                        await deleteHoliday(i.id);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
                 </TableRow>
               );
             })}

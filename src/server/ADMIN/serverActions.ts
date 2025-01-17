@@ -130,3 +130,14 @@ export const createHoliday = async (values: HolidaySchemaType) => {
     return { status: false, error: "Internal server error" };
   }
 };
+
+export const deleteHoliday = async (_id: number) => {
+  await prisma.holiday.delete({
+    where: {
+      id: _id,
+    },
+  });
+
+  revalidatePath("/admin/holidays", "page");
+  return;
+};

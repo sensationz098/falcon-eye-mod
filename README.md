@@ -129,3 +129,5 @@ const payroll = generatePayroll(employeeData);
 // Display Payroll Results
 console.log(payroll);
 ```
+
+i'm creating department and designationa and assigning user and creating profile using card and fingerprint. after that i will fetch all the attendence information on the basis of user.

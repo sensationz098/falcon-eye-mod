@@ -124,6 +124,13 @@ model LeaveRequest {
   @@index([id, userID])
 }
 
+model Holiday {
+  id           Int      @id @default(autoincrement())
+  title        String
+  message      String
+  holiday_date DateTime
+}
+
 enum LeaveRequestType {
   PAID
   SICK

@@ -13,7 +13,8 @@ export const AdminNavbarProps: NavbarPropsType[] = [
   { title: "Employee", url: "/admin/employee", Icon: Calendar },
   { title: "Payroll", url: "/admin/payroll", Icon: Calendar },
   { title: "Leave Request", url: "/admin/leave-request", Icon: Calendar },
-  { title: "Attendece", url: "/admin/attendence", Icon: Calendar },
+  { title: "Attendence", url: "/admin/attendence", Icon: Calendar },
+  { title: "Holidays", url: "/admin/holidays", Icon: Calendar },
 ];
 
 export const UserNavbarProps: NavbarPropsType[] = [
@@ -21,6 +22,7 @@ export const UserNavbarProps: NavbarPropsType[] = [
   { title: "Profile", url: "/user/profile", Icon: Home },
   { title: "Work Report", url: "/user/work-report", Icon: Home },
   { title: "Leave Request", url: "/user/leave-request", Icon: Home },
+  { title: "Attendence", url: "/user/attendence", Icon: Home },
 ];
 
 export const IndianStates: Readonly<string[]> = [
@@ -60,3 +62,5 @@ export const IndianStates: Readonly<string[]> = [
   "Uttarakhand",
   "West Bengal",
 ];
+
+export const ETime_Office_Api_Url = [];

@@ -58,7 +58,7 @@ export default function PieCharts() {
   }, []);
 
   return (
-    <Card className="">
+    <Card className="max-w-96">
       <CardHeader className="items-center pb-0">
         <CardTitle>Pie Chart - Donut with Text</CardTitle>
         <CardDescription>January - June 2024</CardDescription>

@@ -24,6 +24,13 @@ const chartData = [
   { month: "April", desktop: 73 },
   { month: "May", desktop: 209 },
   { month: "June", desktop: 214 },
+  { month: "June", desktop: 214 },
+  { month: "June", desktop: 214 },
+  { month: "June", desktop: 214 },
+  { month: "June", desktop: 214 },
+  { month: "June", desktop: 214 },
+  { month: "June", desktop: 214 },
+  { month: "June", desktop: 214 },
 ];
 
 const chartConfig = {
@@ -35,7 +42,7 @@ const chartConfig = {
 
 export default function BarCharts() {
   return (
-    <Card className="md:w-1/2">
+    <Card className="">
       <CardHeader>
         <CardTitle>Bar Chart - Horizontal</CardTitle>
         <CardDescription>January - June 2024</CardDescription>

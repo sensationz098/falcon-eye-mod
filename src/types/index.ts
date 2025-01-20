@@ -137,3 +137,20 @@ export const LeaveRequestSchema = z.object({
 });
 
 export type LeaveRequestSchemaType = z.infer<typeof LeaveRequestSchema>;
+
+export const HolidaySchema = z.object({
+  title: z
+    .string()
+    .trim()
+    .min(3, "the holiday title must be 3 characters long")
+    .max(30, "only 30 character allowed")
+    .toUpperCase(),
+  message: z
+    .string()
+    .trim()
+    .min(3, "the message should be 3 characters long")
+    .max(50, "only 50 characters allowed"),
+  holiday_date: z.date(),
+});
+
+export type HolidaySchemaType = z.infer<typeof HolidaySchema>;

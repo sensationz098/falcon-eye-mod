@@ -152,6 +152,8 @@ const page = async () => {
       <div className="md:flex md:flex-1 md:flex-row md:items-start md:justify-around md:gap-5">
         {/* Payroll Table  */}
         <section>
+          {user?.payroll === null || <h1>No Payroll Information</h1>}
+
           <Table className="border">
             <TableCaption>Payroll Information</TableCaption>
             <TableHeader>

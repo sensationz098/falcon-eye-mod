@@ -25,12 +25,12 @@ const StatsCard = async () => {
   ];
 
   return (
-    <div className="flex flex-wrap items-center justify-around gap-4 p-2">
+    <div className="my-2 flex w-full items-center gap-2">
       {stats.map((i) => {
         return (
           <Card
             key={i.title}
-            className="w-[250px] transition-all duration-500 hover:border hover:border-primary"
+            className="w-full transition-all duration-500 hover:border hover:border-primary"
           >
             {/* <CardHeader className="flex flex-row items-center justify-around">
               <CardTitle className="capitalize">{i.title}</CardTitle>

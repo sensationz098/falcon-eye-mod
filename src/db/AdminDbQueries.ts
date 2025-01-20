@@ -97,3 +97,7 @@ export const getStatsCard = async () => {
 
   return { totalEmployee, totalUsers, totalBranches };
 };
+
+export const getHolidays = async () => {
+  return await prisma.holiday.findMany();
+};

@@ -43,6 +43,8 @@ const WorkReportUpdate = ({ userID }: { userID: string }) => {
       toast({
         title: "Work Report Updated Successfully",
       });
+
+      form.reset();
     } else {
       toast({
         title: "error",

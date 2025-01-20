@@ -10,6 +10,7 @@ export const createLeaveRequest = async (
   emp_name: string,
 ) => {
   try {
+    console.log(values, userID, emp_name);
     await prisma.leaveRequest.create({
       data: {
         ...values,
@@ -55,4 +56,31 @@ export const deleteWorkReport = async (id: number) => {
   });
   revalidatePath("/user/work-report", "page");
   return;
+};
+
+export const updateWorkReport = async (id: number, work: string) => {
+  try {
+    await prisma.workReport.update({
+      where: {
+        id: id,
+      },
+      data: {
+        work: work,
+      },
+    });
+
+    revalidatePath("/user/work-report", "page");
+    return { status: true, message: "Work Report Updated" };
+  } catch (err: Error | unknown) {
+    if (err instanceof Error) return { status: false, error: err.message };
+    return { status: false, error: "Internal server error" };
+  }
+};
+
+export const deleteLeaveRequest = async (id: number) => {
+  return await prisma.leaveRequest.delete({
+    where: {
+      id: id,
+    },
+  });
 };

@@ -7,9 +7,12 @@ const page = async () => {
   const users = await getAllUsers();
 
   return (
-    <div>
-      <h1>total {users.length} users found</h1>
-      <AddUser />
+    <div className="mt-2">
+      {/* <div className="mb-4 flex items-center justify-start gap-10">
+        <h1>total {users.length} users found</h1>
+
+        <AddUser />
+      </div> */}
       <DataTable columns={UserColumn} data={users} />
     </div>
   );

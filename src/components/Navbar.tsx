@@ -19,7 +19,7 @@ const Navbar = ({ navbarProps }: { navbarProps: NavbarPropsType[] }) => {
           {navbarProps.map((i, index) => {
             return (
               <Link key={index} href={i.url}>
-                <Button className="text-center">
+                <Button className="rounded-xl bg-blue-500 text-center text-white">
                   {i.title} <i.Icon />
                 </Button>
               </Link>

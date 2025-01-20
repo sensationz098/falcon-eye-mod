@@ -69,7 +69,7 @@ const AddUser = () => {
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button className="rounded-[5px]">Add User</Button>
+          <Button className="rounded-xl bg-blue-500">Add User</Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>

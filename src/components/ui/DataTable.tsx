@@ -21,6 +21,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
+import AddUser from "../ADMIN/AddUser";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -47,7 +48,7 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       {/* search input fields */}
-      <div className="flex items-center py-4">
+      <div className="flex items-center justify-between py-4">
         <Input
           placeholder="Filter Name..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -56,6 +57,12 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
+
+        <div className="mb-4 flex items-center justify-start gap-10">
+          <h1>total {data.length} users found</h1>
+
+          <AddUser />
+        </div>
       </div>
 
       {/* data table */}

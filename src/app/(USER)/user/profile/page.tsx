@@ -9,216 +9,261 @@ import {
 } from "@/components/ui/table";
 
 import {
-  empTypes,
+  // empTypes,
   formatCurrency,
-  formatNumber,
+  // formatNumber,
   getSession,
 } from "@/lib/utils";
 import { formatDate } from "date-fns";
-
 import { getUserProfile } from "@/db/UserDbQueries";
+import { User } from "lucide-react";
 
 const page = async () => {
   const session = await getSession();
   const user = await getUserProfile({ _id: session?.user.id as string });
 
+  // Utility function to render table rows
+  const renderTableRow = (
+    label: string,
+    value: string | number | null | undefined,
+  ) => (
+    <TableRow>
+      <TableCell>{label}</TableCell>
+      <TableCell>{value || "N/A"}</TableCell>
+    </TableRow>
+  );
+
   return (
-    <div className="px-4">
-      {/*  personal details table */}
+    <div className="bg-gray-900 px-4 text-white">
       <section>
-        <Table className="border">
-          <TableCaption>Employee Details</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Information</TableHead>
-              <TableHead>Details</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell>Employee ID</TableCell>
-              <TableCell>{user?.Employee?.employee_id}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>{user?.Employee?.name}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Email</TableCell>
-              <TableCell>{user?.Employee?.email}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Gender</TableCell>
-              <TableCell>{user?.Employee?.gender}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Date of Birth</TableCell>
-              <TableCell>
-                {formatDate(
-                  user?.Employee?.date_of_birth
-                    ? user?.Employee?.date_of_birth
-                    : "N/A",
-                  "PPP",
-                )}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Address</TableCell>
-              <TableCell>{user?.Employee?.address}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Primary Contact</TableCell>
-              <TableCell>
-                {formatNumber(
-                  user?.Employee?.primary_contact as string,
-                  "mobile",
-                )}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Emergency Contact 1</TableCell>
-              <TableCell>
-                {formatNumber(
-                  user?.Employee?.emergency_contact_1 as string,
-                  "mobile",
-                )}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Emergency Contact 2</TableCell>
-              <TableCell>
-                {formatNumber(
-                  user?.Employee?.emergency_contact_2 as string,
-                  "mobile",
-                )}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>City</TableCell>
-              <TableCell>{user?.Employee?.city}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Country</TableCell>
-              <TableCell>{user?.Employee?.country}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Aadhar no</TableCell>
-              <TableCell>
-                {formatNumber(user?.Employee?.aadhar_no as string, "aadhar")}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>PAN no</TableCell>
-              <TableCell>{user?.Employee?.PAN_no}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell colSpan={2} className="text-md text-center font-bold">
-                Other Details
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Branch</TableCell>
-              <TableCell>{user?.Employee?.branch}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Designation</TableCell>
-              <TableCell>{user?.Employee?.designation}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Department</TableCell>
-              <TableCell>{user?.Employee?.department}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Employement Type</TableCell>
-              <TableCell>
-                {empTypes(user?.Employee?.employement_type as string)}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Date of Joining</TableCell>
-              <TableCell>
-                {formatDate(
-                  user?.Employee?.date_of_joining
-                    ? user?.Employee?.date_of_joining
-                    : "N/A",
-                  "PPP",
-                )}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </section>
+        <div className="bg-gray-800">
+          <div className="container mx-auto py-8">
+            <div className="grid grid-cols-4 gap-6 px-4 sm:grid-cols-12">
+              {/* Personal Profile Section */}
+              <div className="rounded-5xl col-span-4 sm:col-span-3">
+                <div className="rounded-lg bg-gray-700 p-6 shadow">
+                  <div className="flex flex-col items-center">
+                    <User className="mb-4 h-32 w-32 shrink-0 rounded-full bg-gray-600" />
+                    <h1 className="text-xl font-bold">{session?.user.name}</h1>
+                    <p className="text-gray-300">
+                      {user?.Employee?.designation}
+                    </p>
+                  </div>
+                  <hr className="my-6 border-t border-gray-600" />
+                  <p className="text-center text-gray-300">
+                    {user?.Employee?.employee_id}
+                  </p>
+                </div>
+              </div>
 
-      <div className="md:flex md:flex-1 md:flex-row md:items-start md:justify-around md:gap-5">
-        {/* Payroll Table  */}
+              {/* Employee Details Table */}
+              <div className="col-span-4 sm:col-span-9">
+                <div className="rounded-lg bg-gray-700 p-6 shadow">
+                  <h2 className="mb-4 text-center text-2xl font-bold">
+                    Personal Details
+                  </h2>
+                  <hr className="my-6 border-t border-gray-600" />
+                  <div className="mx-auto flex w-full gap-72">
+                    <div>
+                      <div className="text-medium w-full rounded-lg p-6 text-gray-400">
+                        <h3 className="mb-2 text-lg font-bold text-white">
+                          Name
+                        </h3>
+                        <p className="mb-2">{user?.Employee?.name}</p>
+                      </div>
+
+                      <div className="text-medium w-full rounded-lg p-6 text-gray-400">
+                        <h3 className="mb-2 text-lg font-bold text-white">
+                          Gender
+                        </h3>
+                        <p className="mb-2">{user?.Employee?.gender}</p>
+                      </div>
+
+                      <div className="text-medium w-full rounded-lg p-6 text-gray-400">
+                        <h3 className="mb-2 text-lg font-bold text-white">
+                          Date of Birth
+                        </h3>
+                        <p className="mb-2">
+                          {" "}
+                          {user?.Employee?.date_of_birth
+                            ? formatDate(user.Employee.date_of_birth, "PPP")
+                            : "N/A"}
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-medium w-full rounded-lg p-6 text-gray-400">
+                        <h3 className="mb-2 text-lg font-bold text-white">
+                          Email
+                        </h3>
+                        <p className="mb-2">{user?.Employee?.email}</p>
+                      </div>
+
+                      <div className="text-medium w-full rounded-lg p-6 text-gray-400">
+                        <h3 className="mb-2 text-lg font-bold text-white">
+                          Contact
+                        </h3>
+                        <p className="mb-2">
+                          <span className="font-semibold text-gray-200">
+                            Primary Contact:{" "}
+                          </span>
+                          {user?.Employee?.primary_contact}
+                        </p>
+                        <p className="mb-2">
+                          <span className="font-semibold text-gray-200">
+                            Emer Contact1{" "}
+                          </span>
+                          {user?.Employee?.emergency_contact_1}
+                        </p>
+                        <p className="mb-2">
+                          <span className="font-semibold text-gray-200">
+                            Emer Contact2{" "}
+                          </span>
+                          {user?.Employee?.emergency_contact_2}
+                        </p>
+                      </div>
+
+                      <div className="text-medium w-full rounded-lg p-6 text-gray-400">
+                        <h3 className="mb-2 text-lg font-bold text-white">
+                          Address:
+                        </h3>
+                        <p className="mb-2">
+                          {user?.Employee?.address}
+                          {", "} {user?.Employee?.city}
+                          {", "} {user?.Employee?.country}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative right-0 col-span-4 sm:col-span-9">
+                <div className="rounded-lg bg-gray-700 p-6 shadow">
+                  <h2 className="mb-4 text-center text-2xl font-bold">
+                    Employee Details
+                  </h2>
+                  <hr className="my-6 border-t border-gray-600" />
+                  <div className="mx-auto flex w-full gap-72">
+                    <div>
+                      <div className="text-medium w-full rounded-lg p-6 text-gray-400">
+                        <h3 className="mb-2 text-lg font-bold text-white">
+                          Branch
+                        </h3>
+                        <p className="mb-2">{user?.Employee?.branch}</p>
+                      </div>
+
+                      <div className="text-medium w-full rounded-lg p-6 text-gray-400">
+                        <h3 className="mb-2 text-lg font-bold text-white">
+                          Aadhaar Number
+                        </h3>
+                        <p className="mb-2">{user?.Employee?.aadhar_no}</p>
+                      </div>
+
+                      <div className="text-medium w-full rounded-lg p-6 text-gray-400">
+                        <h3 className="mb-2 text-lg font-bold text-white">
+                          Date of Joining
+                        </h3>
+                        <p className="mb-2">
+                          {" "}
+                          {user?.Employee?.date_of_birth
+                            ? formatDate(user.Employee.date_of_joining, "PPP")
+                            : "N/A"}
+                        </p>
+                      </div>
+
+                      <div className="text-medium w-full rounded-lg p-6 text-gray-400">
+                        <h3 className="mb-2 text-lg font-bold text-white">
+                          Employee Type:
+                        </h3>
+                        <p className="mb-2">
+                          {user?.Employee?.employement_type}
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-medium w-full rounded-lg p-6 text-gray-400">
+                        <h3 className="mb-2 text-lg font-bold text-white">
+                          Pan Number
+                        </h3>
+                        <p className="mb-2">{user?.Employee?.PAN_no}</p>
+                      </div>
+
+                      <div className="text-medium w-full rounded-lg p-6 text-gray-400">
+                        <h3 className="mb-2 text-lg font-bold text-white">
+                          Department
+                        </h3>
+                        <p className="mb-2">{user?.Employee?.department}</p>
+                      </div>
+
+                      <div className="text-medium w-full rounded-lg p-6 text-gray-400">
+                        <h3 className="mb-2 text-lg font-bold text-white">
+                          Designation:
+                        </h3>
+                        <p className="mb-2">{user?.Employee?.designation}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Payroll Table Section */}
         <section>
-          {user?.payroll === null || <h1>No Payroll Information</h1>}
-
-          <Table className="border">
-            <TableCaption>Payroll Information</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Information</TableHead>
-                <TableHead>Details</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell>Basic Salary</TableCell>
-                <TableCell>
-                  {formatCurrency(user?.payroll?.basic_salary as number)}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>HRA</TableCell>
-                <TableCell>
-                  {formatCurrency(user?.payroll?.HRA as number)}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Medical deductions</TableCell>
-                <TableCell>
-                  {formatCurrency(user?.payroll?.medical as number)}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Convenience</TableCell>
-                <TableCell>
-                  {formatCurrency(user?.payroll?.convenience as number)}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Other Allowences</TableCell>
-                <TableCell>
-                  {formatCurrency(user?.payroll?.other_allowences as number)}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Deducations</TableCell>
-                <TableCell>
-                  {formatCurrency(user?.payroll?.deducation as number)}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Gross Salary</TableCell>
-                <TableCell>
-                  {formatCurrency(user?.payroll?.gross_salary as number)}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Net Salary</TableCell>
-                <TableCell>
-                  {formatCurrency(user?.payroll?.net_salary as number)}
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+          {!user?.payroll ? (
+            <h1>No Payroll Information</h1>
+          ) : (
+            <Table className="border dark:border-gray-600">
+              <TableCaption>Payroll Information</TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Information</TableHead>
+                  <TableHead>Details</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {renderTableRow(
+                  "Basic Salary",
+                  formatCurrency(user?.payroll?.basic_salary as number),
+                )}
+                {renderTableRow(
+                  "HRA",
+                  formatCurrency(user?.payroll?.HRA as number),
+                )}
+                {renderTableRow(
+                  "Medical deductions",
+                  formatCurrency(user?.payroll?.medical as number),
+                )}
+                {renderTableRow(
+                  "Convenience",
+                  formatCurrency(user?.payroll?.convenience as number),
+                )}
+                {renderTableRow(
+                  "Other Allowances",
+                  formatCurrency(user?.payroll?.other_allowences as number),
+                )}
+                {renderTableRow(
+                  "Deductions",
+                  formatCurrency(user?.payroll?.deducation as number),
+                )}
+                {renderTableRow(
+                  "Gross Salary",
+                  formatCurrency(user?.payroll?.gross_salary as number),
+                )}
+                {renderTableRow(
+                  "Net Salary",
+                  formatCurrency(user?.payroll?.net_salary as number),
+                )}
+              </TableBody>
+            </Table>
+          )}
         </section>
 
-        {/* bank account information */}
-
+        {/* Bank Account Information */}
         <section>
-          <Table className="border">
+          <Table className="border dark:border-gray-600">
             <TableCaption>Bank Account Information</TableCaption>
             <TableHeader>
               <TableRow>
@@ -227,30 +272,18 @@ const page = async () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>Account Holder Name</TableCell>
-                <TableCell>{"holder name"}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Account No</TableCell>
-                <TableCell>{"account number"}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Bank Name</TableCell>
-                <TableCell>{"bank name"}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Branch</TableCell>
-                <TableCell>{"branch"}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>IFSC Code</TableCell>
-                <TableCell>{"ifsc code"}</TableCell>
-              </TableRow>
+              {renderTableRow(
+                "Account Holder Name",
+                user?.bank?.account_holder_name,
+              )}
+              {renderTableRow("Account No", user?.bank?.account_no)}
+              {renderTableRow("Bank Name", user?.bank?.bank_name)}
+              {renderTableRow("Branch", user?.bank?.branch)}
+              {renderTableRow("IFSC Code", user?.bank?.IFSC_code)}
             </TableBody>
           </Table>
         </section>
-      </div>
+      </section>
     </div>
   );
 };

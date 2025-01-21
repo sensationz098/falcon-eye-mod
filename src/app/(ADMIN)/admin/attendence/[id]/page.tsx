@@ -1,3 +1,4 @@
+import { getEmpIdById } from "@/db/UserDbQueries";
 import {
   Table,
   TableBody,
@@ -7,18 +8,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { getSession } from "@/lib/utils";
-import { getEmpIdById } from "@/db/UserDbQueries";
 import { fetchAttendence } from "@/server/RealtimeAPI";
 import { format, parse } from "date-fns";
 
-const page = async () => {
-  const session = await getSession();
-  const userID = await getEmpIdById(session?.user.id as string);
-
+const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const id = (await params).id;
+  const empID = await getEmpIdById(id);
   const attendence = await fetchAttendence({
-    params: userID?.employee_id as string,
+    params: empID?.employee_id as string,
   });
 
   return (
@@ -64,4 +61,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default Page;

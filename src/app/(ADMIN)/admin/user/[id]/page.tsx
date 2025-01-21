@@ -15,6 +15,7 @@ import {
 import { formatCurrency, formatNumber } from "@/lib/utils";
 import CreatePayroll from "@/components/ADMIN/CreatePayroll";
 import CreateBankAccount from "@/components/ADMIN/CreateBankAccount";
+import { deleteUser } from "@/server/ADMIN/serverActions";
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const _id = (await params).id;
@@ -28,11 +29,29 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
         <Link href={`/admin/employee/create/${_id}`}>
           <Button>Create Employee</Button>
         </Link>
+        <Button
+          onClick={async () => {
+            "use server";
+            await deleteUser(_id);
+          }}
+          variant={"destructive"}
+        >
+          Delete User
+        </Button>
       </div>
     );
   }
   return (
     <div>
+      <Button
+        onClick={async () => {
+          "use server";
+          await deleteUser(_id);
+        }}
+        variant={"destructive"}
+      >
+        Delete User
+      </Button>
       <section>
         <Link href={`/admin/employee/update/${_id}`}>
           <Button>Update Employee</Button>

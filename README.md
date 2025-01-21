@@ -131,15 +131,3 @@ console.log(payroll);
 ```
 
 i'm creating department and designationa and assigning user and creating profile using card and fingerprint. after that i will fetch all the attendence information on the basis of user.
-
-<!-- local database coonation -->
-
-DATABASE_URL="postgresql://developer:developer@localhost:5432/falcon_eye_ems?schema=public"
-
-<!-- vercel database connection -->
-
-DATABASE_URL=postgres://neondb_owner:IAtMm0V5akTP@ep-odd-sunset-a1680bap-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require
-
-<!-- neon database connection  -->
-
-DATABASE_URL="postgresql://falcon_owner:Wi7EzRYATvV2@ep-raspy-wave-a12nrxbk-pooler.ap-southeast-1.aws.neon.tech/falcon?sslmode=require"

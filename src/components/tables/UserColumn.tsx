@@ -80,6 +80,10 @@ export const UserColumn: ColumnDef<UserColumnType>[] = [
             <DropdownMenuItem>
               <Link href={`/admin/user/${user.id}`}>View Employee</Link>
             </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <Link href={`/admin/attendence/${user.id}`}>View Attendence</Link>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

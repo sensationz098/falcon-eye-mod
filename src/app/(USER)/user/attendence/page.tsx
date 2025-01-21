@@ -21,15 +21,71 @@ const page = async () => {
     params: userID?.employee_id as string,
   });
 
+  let TotalSunday = 0;
+  let TotalHoliday = 0;
+  let totalAbsent = 0;
+  let totalPresent = 0;
+
+  if (attendence?.InOutPunchData) {
+    // Single pass over the data
+    attendence.InOutPunchData.forEach((i) => {
+      switch (i.Status) {
+        case "WO":
+          TotalSunday++;
+          break;
+        case "HL":
+          TotalHoliday++;
+          break;
+        case "A":
+          totalAbsent++;
+          break;
+        case "P":
+          totalPresent++;
+          break;
+        default:
+          break;
+      }
+    });
+  }
+
+  console.log("Absent Count:", totalAbsent);
+  console.log("Present Count:", totalPresent);
+  console.log("Total Holiday + Sunday Count:", TotalHoliday + TotalSunday);
+
   return (
     <div>
+      <div>
+        <h1 className="w-full text-center text-5xl font-bold text-[#3576DF]">
+          Attendance
+        </h1>
+        <div className="my-8 flex justify-evenly">
+          <div>
+            <h2 className="text-xl font-normal text-white">
+              Total Present:{" "}
+              <span className="text-green-500">{totalPresent}</span>
+            </h2>
+            <h2 className="text-xl font-normal text-white">
+              Total Absent: <span className="text-red-500">{totalAbsent}</span>
+            </h2>
+          </div>
+          <div>
+            <h2 className="text-xl font-normal text-white">
+              Total WeekOff:{" "}
+              <span className="text-yellow-500"> {TotalSunday}</span>
+            </h2>
+            <h2 className="text-xl font-normal text-white">
+              Total Holiday: {TotalHoliday}
+            </h2>
+          </div>
+        </div>
+      </div>
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
-        <TableHeader>
+        <TableHeader className="">
           <TableRow>
-            <TableHead>No</TableHead>
-            <TableHead>Emp Code</TableHead>
-            <TableHead>Name</TableHead>
+            <TableHead className="">No</TableHead>
+            {/* <TableHead>Emp Code</TableHead> */}
+            {/* <TableHead>Name</TableHead> */}
             <TableHead>Date</TableHead>
             <TableHead>Punch In Code</TableHead>
             <TableHead>Punch Out Code</TableHead>
@@ -45,16 +101,20 @@ const page = async () => {
               "PP",
             );
             return (
-              <TableRow key={index}>
+              <TableRow className="" key={index}>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>{i.Empcode}</TableCell>
-                <TableCell>{i.Name}</TableCell>
+                {/* <TableCell>{i.Empcode}</TableCell> */}
+                {/* <TableCell>{i.Name}</TableCell> */}
                 <TableCell>{dateString}</TableCell>
                 <TableCell>{i.INTime}</TableCell>
                 <TableCell>{i.OUTTime}</TableCell>
                 <TableCell>{i.WorkTime}</TableCell>
                 <TableCell>{i.Late_In}</TableCell>
-                <TableCell>{i.Status}</TableCell>
+                <TableCell
+                  className={`font-bold text-red-800 ${i.Status === "A" ? "text-red-500" : i.Status === "P" ? "text-green-500" : "text-yellow-500"}`}
+                >
+                  {` ${i.Status === "A" ? "Absent" : i.Status === "P" ? "Present" : i.Status === "WO" ? "Week Off" : "Holiday"}`}
+                </TableCell>
               </TableRow>
             );
           })}

@@ -1,27 +1,28 @@
-import { CreateHolidayForm } from "@/components";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { getHolidays } from "@/db/AdminDbQueries";
-import { deleteHoliday } from "@/server/ADMIN/serverActions";
+// import { CreateHolidayForm } from "@/components";
+// import { Button } from "@/components/ui/button";
+// import {
+//   Table,
+//   TableBody,
+//   TableCaption,
+//   TableCell,
+//   TableHead,
+//   TableHeader,
+//   TableRow,
+// } from "@/components/ui/table";
+// import { getHolidays } from "@/db/AdminDbQueries";
+// import { deleteHoliday } from "@/server/ADMIN/serverActions";
 
-import { format } from "date-fns";
+// import { format } from "date-fns";
+// import { Hello } from "./hello";
 
 const page = async () => {
-  const hoildays = await getHolidays();
+  // const hoildays = await getHolidays();
 
   return (
     <div>
-      <h1>List of all holidays</h1>
-      <div className="flex max-w-xl flex-col md:flex-row">
-        <Table>
+      {/* <h1>List of all holidays</h1> */}
+      <div className="flex h-[900px] w-full flex-col justify-around py-12 md:flex-row">
+        {/* <Table>
           <TableCaption>A list of your recent invoices.</TableCaption>
           <TableHeader>
             <TableRow>
@@ -55,9 +56,15 @@ const page = async () => {
               );
             })}
           </TableBody>
-        </Table>
+        </Table> */}
+        {/* <div className="h-full w-1/2 rounded-3xl bg-gray-700 p-4"> */}
+        {/* <Hello /> */}
+        {/* </div> */}
+
+        {/* <div className="w-1/4 rounded-3xl bg-gray-700 p-4">
+          <CreateHolidayForm />
+        </div> */}
       </div>
-      <CreateHolidayForm />
     </div>
   );
 };

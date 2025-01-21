@@ -3,6 +3,9 @@ import { getUserHeader } from "@/db/UserDbQueries";
 
 const UserHeader = async ({ _id }: { _id: string }) => {
   const user = await getUserHeader(_id);
+
+  if (user === null) return <h1>the employee details not found</h1>;
+
   return (
     <div className="flex flex-1 flex-col flex-wrap md:flex-row">
       <section className="mx-2">

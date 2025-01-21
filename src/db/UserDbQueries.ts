@@ -105,3 +105,14 @@ export const getHolidays = async () => {
     take: 2,
   });
 };
+
+export const getEmpIdById = async (_id: string) => {
+  return await prisma.employee.findFirst({
+    where: {
+      userID: _id,
+    },
+    select: {
+      employee_id: true,
+    },
+  });
+};

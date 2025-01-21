@@ -101,3 +101,15 @@ export const getStatsCard = async () => {
 export const getHolidays = async () => {
   return await prisma.holiday.findMany();
 };
+
+export const upcomingBirthdays = async () => {
+  const birthday = await prisma.employee.findMany({
+    select: {
+      id: true,
+      name: true,
+      date_of_birth: true,
+    },
+  });
+
+  return birthday;
+};

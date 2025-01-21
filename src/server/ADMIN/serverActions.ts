@@ -141,3 +141,22 @@ export const deleteHoliday = async (_id: number) => {
   revalidatePath("/admin/holidays", "page");
   return;
 };
+
+import { redirect } from "next/navigation";
+
+export const deleteUser = async (_id: string) => {
+  try {
+    await prisma.user.delete({
+      where: {
+        id: _id,
+      },
+    });
+
+    revalidatePath("/admin/user", "page");
+    redirect("/admin/user");
+  } catch (err: Error | unknown) {
+    const error = err instanceof Error ? err.message : "Internal server error";
+
+    return { status: false, error: error };
+  }
+};

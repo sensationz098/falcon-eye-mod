@@ -22,7 +22,7 @@ const page = async () => {
     <div>
       {/* <h1>List of all holidays</h1> */}
       <div className="flex h-[900px] w-full flex-col justify-around py-12 md:flex-row">
-        {/* <Table>
+        <Table>
           <TableCaption>A list of your recent invoices.</TableCaption>
           <TableHeader>
             <TableRow>

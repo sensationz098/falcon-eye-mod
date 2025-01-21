@@ -28,7 +28,7 @@ export default function RootLayout({
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <body className={`${poppins.className} antialiased`}>
         <NextTopLoader
-          color="#9400FF"
+          color="#3576DF"
           initialPosition={0.4}
           speed={400}
           crawlSpeed={300}

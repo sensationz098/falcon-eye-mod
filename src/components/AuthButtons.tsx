@@ -9,9 +9,19 @@ const AuthButtons = () => {
   return (
     <div>
       {session.status === "authenticated" ? (
-        <Button onClick={() => signOut({ redirect: true })}>Log out</Button>
+        <Button
+          className="rounded-xl bg-blue-500 text-white"
+          onClick={() => signOut({ redirect: true })}
+        >
+          Log out
+        </Button>
       ) : (
-        <Button onClick={() => signIn("credentials")}>Log In</Button>
+        <Button
+          className="rounded-xl bg-blue-500 text-white"
+          onClick={() => signIn("credentials")}
+        >
+          Log In
+        </Button>
       )}
     </div>
   );

@@ -15,6 +15,7 @@ const page = async () => {
         <div className="">
           <RightSide />
         </div>
+        {/* <div className="hidden pr-10 md:block"></div> */}
       </div>
     </div>
   );

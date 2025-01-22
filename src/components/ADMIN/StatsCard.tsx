@@ -1,12 +1,7 @@
-import {
-  Card,
-  // CardContent,
-  // CardDescription,
-  // CardHeader,
-  // CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Home, LucideIcon, Calendar, Mail } from "lucide-react";
 import { getStatsCard } from "@/db/AdminDbQueries";
+import { fetchPresent } from "@/server/RealtimeAPI";
 
 type StatsCardType = {
   title: string;
@@ -17,11 +12,13 @@ type StatsCardType = {
 const StatsCard = async () => {
   const statsData = await getStatsCard();
 
+  const presents = await fetchPresent();
+
   const stats: StatsCardType = [
     { title: "Employee", icon: Home, value: statsData.totalEmployee },
     { title: "Users", icon: Calendar, value: statsData.totalUsers },
     { title: "Branchs", icon: Mail, value: statsData.totalBranches.length },
-    { title: "Present", icon: Home, value: 54 },
+    { title: "Present", icon: Home, value: presents.present || 0 },
   ];
 
   return (

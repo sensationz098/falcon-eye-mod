@@ -11,7 +11,7 @@ const AuthButtons = () => {
       {session.status === "authenticated" ? (
         <Button
           className="rounded-xl bg-blue-500 text-white"
-          onClick={() => signOut({ redirect: true })}
+          onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
         >
           Log out
         </Button>

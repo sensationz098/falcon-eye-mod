@@ -39,6 +39,30 @@ export const fetchAttendence = async ({ params }: { params: string }) => {
   }
 };
 
+export const fetchPresent = async () => {
+  try {
+    const res = await fetch(
+      `https://api.etimeoffice.com/api/DownloadInOutPunchData?Empcode=ALL&ToDate=${today}
+      `,
+      {
+        cache: "force-cache",
+        method: "GET",
+        headers: {
+          Authorization: "Basic " + base64Auth,
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    const attendence: InOutPunchResponse = await res.json();
+
+    return { status: true, present: attendence.InOutPunchData.length };
+  } catch (err: Error | unknown) {
+    const error = err instanceof Error ? err.message : "Faild to fetch";
+    console.log(error);
+    return { status: false, error: error };
+  }
+};
+
 export type InOutPunchData = {
   Empcode: string;
   INTime: string;

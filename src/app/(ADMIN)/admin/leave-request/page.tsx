@@ -1,4 +1,5 @@
 // import LeaveRequest from "@/components/ADMIN/LeaveRequest";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -13,7 +14,7 @@ import { format } from "date-fns";
 
 const page = async () => {
   const leaves = await getAllLeaveRequest();
-  console.log(leaves);
+
   if (leaves.length === 0) return <h1>no leave request found</h1>;
 
   return (
@@ -33,11 +34,13 @@ const page = async () => {
             <TableHead>Created At</TableHead>
             <TableHead>Reason</TableHead>
             <TableHead>Approval</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {leaves.map((leave) => (
             <TableRow key={leave.id}>
+              <TableCell>{leave.emp_name}</TableCell>
               <TableCell>{leave.emp_name}</TableCell>
               <TableCell>{format(leave.start_date, "PPP")}</TableCell>
               <TableCell>{format(leave.end_date ?? "", "PPP")}</TableCell>
@@ -46,6 +49,18 @@ const page = async () => {
               <TableCell>{format(leave.created_At, "PPP")}</TableCell>
               <TableCell>{leave.reason}</TableCell>
               <TableCell>{leave.approval}</TableCell>
+              <TableCell>
+                <Button variant={"default"}>Approve</Button>
+                <Button
+                  onClick={async () => {
+                    "use server";
+                    console.log("server");
+                  }}
+                  variant={"destructive"}
+                >
+                  Delete
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

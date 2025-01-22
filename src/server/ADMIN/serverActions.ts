@@ -160,3 +160,5 @@ export const deleteUser = async (_id: string) => {
     return { status: false, error: error };
   }
 };
+
+export const actionLeaveRequest = async () => {};

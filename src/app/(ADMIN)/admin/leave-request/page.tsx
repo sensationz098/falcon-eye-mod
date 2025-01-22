@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getAllLeaveRequest } from "@/db/AdminDbQueries";
+import { actionLeaveRequest } from "@/server/ADMIN/serverActions";
 import { format } from "date-fns";
 
 const page = async () => {
@@ -50,11 +51,25 @@ const page = async () => {
               <TableCell>{leave.reason}</TableCell>
               <TableCell>{leave.approval}</TableCell>
               <TableCell>
-                <Button variant={"default"}>Approve</Button>
+                <Button
+                  variant={"default"}
+                  onClick={async () => {
+                    "use server";
+                    await actionLeaveRequest({
+                      id: leave.id as number,
+                      type: "APPROVE",
+                    });
+                  }}
+                >
+                  Approve
+                </Button>
                 <Button
                   onClick={async () => {
                     "use server";
-                    console.log("server");
+                    await actionLeaveRequest({
+                      id: leave.id as number,
+                      type: "DELETE",
+                    });
                   }}
                   variant={"destructive"}
                 >

@@ -32,10 +32,12 @@ import { Button } from "../ui/button";
 import { LeaveRequestSchema, LeaveRequestSchemaType } from "@/types";
 import { useSession } from "next-auth/react";
 import { createLeaveRequest } from "@/server/USER/userServerActions";
+import { useRouter } from "next/navigation";
 
 const LeaveRequestForm = () => {
   const { toast } = useToast();
   const session = useSession();
+  const router = useRouter();
 
   const form = useForm<LeaveRequestSchemaType>({
     resolver: zodResolver(LeaveRequestSchema),
@@ -63,6 +65,8 @@ const LeaveRequestForm = () => {
         title: res.error,
       });
     }
+
+    router.push("/user/leave-request");
   }
 
   return (

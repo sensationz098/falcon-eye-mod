@@ -6,8 +6,7 @@ const today = format(new Date(), "dd/MM/yyyy");
 export const fetchAttendence = async ({ params }: { params: string }) => {
   if (params === "ALL") {
     const res = await fetch(
-      `https://api.etimeoffice.com/api/DownloadInOutPunchData?Empcode=${params}&ToDate=${today}
-        `,
+      `https://api.etimeoffice.com/api/DownloadInOutPunchData?Empcode=${params}&ToDate=${today}`,
       {
         cache: "force-cache",
         method: "GET",

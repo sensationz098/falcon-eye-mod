@@ -78,9 +78,10 @@ export const updateWorkReport = async (id: number, work: string) => {
 };
 
 export const deleteLeaveRequest = async (id: number) => {
-  return await prisma.leaveRequest.delete({
+  await prisma.leaveRequest.delete({
     where: {
       id: id,
     },
   });
+  revalidatePath("/user/leave-request");
 };

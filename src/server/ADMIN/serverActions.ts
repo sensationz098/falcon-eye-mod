@@ -142,8 +142,6 @@ export const deleteHoliday = async (_id: number) => {
   return;
 };
 
-import { redirect } from "next/navigation";
-
 export const deleteUser = async (_id: string) => {
   try {
     await prisma.user.delete({
@@ -153,7 +151,6 @@ export const deleteUser = async (_id: string) => {
     });
 
     revalidatePath("/admin/user", "page");
-    redirect("/admin/user");
   } catch (err: Error | unknown) {
     const error = err instanceof Error ? err.message : "Internal server error";
 
@@ -161,4 +158,53 @@ export const deleteUser = async (_id: string) => {
   }
 };
 
-export const actionLeaveRequest = async () => {};
+export const actionLeaveRequest = async ({
+  id,
+  type,
+}: {
+  id: number;
+  type: "APPROVE" | "DECLINE" | "DELETE";
+}) => {
+  try {
+    switch (type) {
+      case "APPROVE":
+        await prisma.leaveRequest.update({
+          where: {
+            id: id,
+          },
+          data: {
+            approval: "ACCEPT",
+          },
+        });
+        revalidatePath("/admin/leave-request", "page");
+        break;
+
+      case "DECLINE":
+        await prisma.leaveRequest.update({
+          where: {
+            id: id,
+          },
+          data: {
+            approval: "REJECT",
+          },
+        });
+        revalidatePath("/admin/leave-request", "page");
+        break;
+
+      case "DELETE":
+        await prisma.leaveRequest.update({
+          where: {
+            id: id,
+          },
+          data: {
+            approval: "CANCEL",
+          },
+        });
+        revalidatePath("/admin/leave-request", "page");
+        break;
+    }
+  } catch (err: Error | unknown) {
+    const error = err instanceof Error ? err.message : "Internal Server Error";
+    console.log(error);
+  }
+};

@@ -16,6 +16,7 @@ import { formatCurrency, formatNumber } from "@/lib/utils";
 import CreatePayroll from "@/components/ADMIN/CreatePayroll";
 import CreateBankAccount from "@/components/ADMIN/CreateBankAccount";
 import { deleteUser } from "@/server/ADMIN/serverActions";
+import { redirect } from "next/navigation";
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const _id = (await params).id;
@@ -33,6 +34,8 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
           onClick={async () => {
             "use server";
             await deleteUser(_id);
+
+            redirect("/admin/user");
           }}
           variant={"destructive"}
         >

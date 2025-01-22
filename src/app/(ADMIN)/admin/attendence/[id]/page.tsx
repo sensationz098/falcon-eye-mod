@@ -1,3 +1,5 @@
+export const revalidate = 3600;
+
 import { getEmpIdById } from "@/db/UserDbQueries";
 import {
   Table,

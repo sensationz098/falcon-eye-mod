@@ -48,10 +48,6 @@ const page = async () => {
     });
   }
 
-  console.log("Absent Count:", totalAbsent);
-  console.log("Present Count:", totalPresent);
-  console.log("Total Holiday + Sunday Count:", TotalHoliday + TotalSunday);
-
   return (
     <div>
       <div>

@@ -2,10 +2,15 @@ import LeaveRequest from "@/components/USER/LeaveRequest";
 import UserHeader from "@/components/USER/UserHeader";
 import WorkReport from "@/components/USER/WorkReport";
 import WorkReportUpdate from "@/components/USER/WorkReportUpdate";
+import { getEmpIdById } from "@/db/UserDbQueries";
 import { getSession } from "@/lib/utils";
 
 const page = async () => {
   const session = await getSession();
+  const isEmployeeAvailable = await getEmpIdById(session?.user.id as string);
+
+  if (isEmployeeAvailable === null)
+    return <h1>ask HR to create employee details</h1>;
 
   return (
     <div>

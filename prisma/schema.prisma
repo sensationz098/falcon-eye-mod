@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL_DEVELOPMENT")
 }
 
 model User {
@@ -27,25 +27,25 @@ model User {
 }
 
 model Employee {
-  id                  String   @id @default(cuid())
+  id                  String    @id @default(cuid())
   employee_id         String
   name                String
-  email               String
-  address             String
-  gender              Gender
-  date_of_birth       DateTime
-  primary_contact     String
+  email               String?
+  address             String?
+  gender              Gender    @default(MALE)
+  date_of_birth       DateTime?
+  primary_contact     String?
   emergency_contact_1 String?
   emergency_contact_2 String?
-  city                String?  @default("New Delhi")
-  country             String?  @default("India")
+  city                String?   @default("New Delhi")
+  country             String?   @default("India")
   aadhar_no           String?
   PAN_no              String?
 
   branch           String       @default("New Delhi")
-  designation      String
-  department       String
-  date_of_joining  DateTime
+  designation      String?
+  department       String?
+  date_of_joining  DateTime?
   employement_type EmployeeType
 
   created_At DateTime @default(now())

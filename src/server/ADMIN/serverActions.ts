@@ -8,6 +8,8 @@ import {
   CreateSalarySchemaType,
   CreateBankAccountSchemaType,
   HolidaySchemaType,
+  UpdateEmployeeSchemaType,
+  UpdatePayrollDetailsSchemaType,
 } from "@/types";
 
 export const addUserAction = async (values: UserSchemaType) => {
@@ -206,5 +208,63 @@ export const actionLeaveRequest = async ({
   } catch (err: Error | unknown) {
     const error = err instanceof Error ? err.message : "Internal Server Error";
     console.log(error);
+  }
+};
+
+export const updateEmployeeDetails = async (
+  values: UpdateEmployeeSchemaType,
+) => {
+  try {
+    await prisma.employee.update({
+      where: {
+        id: values.id,
+      },
+      data: {
+        ...values,
+      },
+    });
+
+    revalidatePath("/admin/employee", "page");
+    return { status: true, message: "Updated successfully" };
+  } catch (err: Error | unknown) {
+    const error = err instanceof Error ? err.message : "Internal server error";
+
+    return { status: false, error: error };
+  }
+};
+
+export const updatePayrollDetails = async (
+  values: UpdatePayrollDetailsSchemaType,
+) => {
+  try {
+    await prisma.payroll.update({
+      where: {
+        id: values.id,
+      },
+      data: {
+        ...values,
+        gross_salary:
+          (values.basic_salary +
+            values.HRA +
+            values.medical +
+            values.convenience +
+            values.other_allowences) *
+          12,
+
+        net_salary:
+          values.basic_salary -
+          (values.deducation +
+            values.HRA +
+            values.medical +
+            values.convenience +
+            values.other_allowences),
+      },
+    });
+    revalidatePath("/admin/payroll", "page");
+    return { status: true, message: "Payroll updated" };
+  } catch (err: Error | unknown) {
+    const error = err instanceof Error ? err.message : "internal Server Error";
+
+    return { status: false, error: error };
   }
 };

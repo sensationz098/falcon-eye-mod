@@ -183,15 +183,24 @@ const CreateEmployeeForm = ({ _id }: { _id: string }) => {
           <FormField
             control={form.control}
             name="date_of_birth"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Date of Birth</FormLabel>
-                <FormControl>
-                  <Input placeholder="date of birth" type="date" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            render={({ field }) => {
+              const formattedDate = field.value || "";
+
+              return (
+                <FormItem>
+                  <FormLabel>Date of Birth</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="date of birth"
+                      type="date"
+                      {...field}
+                      value={formattedDate}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
           />
 
           {/* primary contact */}

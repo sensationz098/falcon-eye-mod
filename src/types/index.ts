@@ -60,10 +60,8 @@ export const EmployeeSchema = z.object({
 export type EmployeeSchemaType = z.infer<typeof EmployeeSchema>;
 
 export const UpdateEmployeeSchema = EmployeeSchema.extend({
-  id: z.string(),
-  userID: z.string(),
-  created_At: z.date(),
-  updated_At: z.date(),
+  id: z.string().cuid(),
+  userID: z.string().cuid(),
 });
 
 export type UpdateEmployeeSchemaType = z.infer<typeof UpdateEmployeeSchema>;
@@ -154,3 +152,12 @@ export const HolidaySchema = z.object({
 });
 
 export type HolidaySchemaType = z.infer<typeof HolidaySchema>;
+
+export const UpdatePayrollDetailsSchema = CreateSalaySchema.extend({
+  id: z.string().cuid(),
+  userID: z.string().cuid(),
+});
+
+export type UpdatePayrollDetailsSchemaType = z.infer<
+  typeof UpdatePayrollDetailsSchema
+>;

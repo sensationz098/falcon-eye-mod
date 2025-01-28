@@ -1,7 +1,5 @@
 "use client";
 
-import { CreateSalaySchema, CreateSalarySchemaType } from "@/types";
-import { createPayrollAction } from "@/server/ADMIN/serverActions";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "../ui/button";
@@ -24,25 +22,40 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  CreateSalarySchemaType,
+  CreateSalaySchema,
+  UpdatePayrollDetailsSchemaType,
+} from "@/types";
+import { updatePayrollDetails } from "@/server/ADMIN/serverActions";
 
-const CreatePayroll = ({ id }: { id: string }) => {
+const UpdatePayrollDetails = ({
+  payroll,
+}: {
+  payroll: UpdatePayrollDetailsSchemaType;
+}) => {
   const { toast } = useToast();
 
   const form = useForm<CreateSalarySchemaType>({
     resolver: zodResolver(CreateSalaySchema),
     defaultValues: {
-      basic_salary: undefined,
-      convenience: undefined,
-      deducation: undefined,
-      HRA: undefined,
-      medical: undefined,
-      other_allowences: undefined,
+      basic_salary: payroll.basic_salary,
+      convenience: payroll.convenience,
+      deducation: payroll.deducation,
+      HRA: payroll.HRA,
+      medical: payroll.medical,
+      other_allowences: payroll.other_allowences,
     },
   });
 
   async function onSubmit(values: CreateSalarySchemaType) {
-    console.log(values);
-    const res = await createPayrollAction({ values, id });
+    const updatedPayrollDetails: UpdatePayrollDetailsSchemaType = {
+      id: payroll.id,
+      userID: payroll.userID,
+      ...values,
+    };
+
+    const res = await updatePayrollDetails(updatedPayrollDetails);
 
     if (res.status) {
       toast({
@@ -60,11 +73,11 @@ const CreatePayroll = ({ id }: { id: string }) => {
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button>Create Payroll</Button>
+          <Button>Update Payroll Details</Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Create Payroll Information</DialogTitle>
+            <DialogTitle>Update Payroll Information</DialogTitle>
             <DialogDescription asChild>
               <Form {...form}>
                 <form
@@ -172,4 +185,4 @@ const CreatePayroll = ({ id }: { id: string }) => {
   );
 };
 
-export default CreatePayroll;
+export default UpdatePayrollDetails;

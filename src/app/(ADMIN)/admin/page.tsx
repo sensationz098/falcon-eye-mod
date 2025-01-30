@@ -9,7 +9,7 @@ const page = async () => {
       <StatsCard />
       <div className="flex gap-4">
         {/* <div className="flex flex-1 gap-2">
-          <PieCharts />
+          <PieCharts /> 
           <BarCharts />
         </div> */}
         <div className="">

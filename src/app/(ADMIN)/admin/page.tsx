@@ -1,4 +1,4 @@
-import { BarCharts, PieCharts, RightSide, StatsCard } from "@/components";
+import { RightSide, StatsCard } from "@/components";
 import { getSession } from "@/lib/utils";
 
 const page = async () => {

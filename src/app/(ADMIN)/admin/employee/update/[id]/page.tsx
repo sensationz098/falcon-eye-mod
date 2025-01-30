@@ -11,7 +11,11 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
     <div>
       <h1>Update Employee Details {_id}</h1>
 
-      <UpdatePayrollDetails payroll={user?.payroll} />
+      {user?.payroll !== null ? (
+        <UpdatePayrollDetails payroll={user?.payroll} />
+      ) : (
+        ""
+      )}
       <UpdateEmployeeForm employee={user?.Employee} />
     </div>
   );

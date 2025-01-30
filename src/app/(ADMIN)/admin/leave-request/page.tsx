@@ -31,7 +31,6 @@ const page = async () => {
             <TableHead>Start Date</TableHead>
             <TableHead>End Date</TableHead>
             <TableHead>Leave Type</TableHead>
-            <TableHead>Half Day</TableHead>
             <TableHead>Created At</TableHead>
             <TableHead>Reason</TableHead>
             <TableHead>Approval</TableHead>
@@ -44,9 +43,13 @@ const page = async () => {
               <TableCell>{leave.emp_name}</TableCell>
               <TableCell>{leave.emp_name}</TableCell>
               <TableCell>{format(leave.start_date, "PPP")}</TableCell>
-              <TableCell>{format(leave.end_date ?? "", "PPP")}</TableCell>
+              <TableCell>
+                {format(
+                  leave.end_date ? leave.end_date : leave.start_date,
+                  "PPP",
+                )}
+              </TableCell>
               <TableCell>{leave.leave_type}</TableCell>
-              <TableCell>{leave.half_day}</TableCell>
               <TableCell>{format(leave.created_At, "PPP")}</TableCell>
               <TableCell>{leave.reason}</TableCell>
               <TableCell>{leave.approval}</TableCell>

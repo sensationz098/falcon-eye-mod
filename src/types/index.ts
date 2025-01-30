@@ -69,28 +69,34 @@ export type UpdateEmployeeSchemaType = z.infer<typeof UpdateEmployeeSchema>;
 export const CreateSalaySchema = z.object({
   basic_salary: z
     .string()
+    .trim()
     .min(2, "the basic salary must be 2 digit long")
-    .transform((val) => parseInt(val, 10)),
+    .transform((val) => parseInt(val)),
   HRA: z
     .string()
+    .trim()
     .default("0")
-    .transform((val) => parseInt(val, 10)),
+    .transform((val) => parseInt(val)),
   medical: z
     .string()
+    .trim()
     .default("0")
-    .transform((val) => parseInt(val, 10)),
+    .transform((val) => parseInt(val)),
   convenience: z
     .string()
+    .trim()
     .default("0")
-    .transform((val) => parseInt(val, 10)),
+    .transform((val) => parseInt(val)),
   other_allowences: z
     .string()
+    .trim()
     .default("0")
-    .transform((val) => parseInt(val, 10)),
+    .transform((val) => parseInt(val)),
   deducation: z
     .string()
+    .trim()
     .default("0")
-    .transform((val) => parseInt(val, 10)),
+    .transform((val) => parseInt(val)),
 });
 
 export type CreateSalarySchemaType = z.infer<typeof CreateSalaySchema>;
@@ -130,8 +136,15 @@ export const LeaveRequestSchema = z.object({
   start_date: z.date(),
   end_date: z.date().optional(),
   reason: z.string().trim().min(2, "Reason must be at least 2 characters long"),
-  leave_type: z.enum(["PAID", "SICK", "CASUAL", "MATERNITY", "SHORT", "OTHER"]),
-  half_day: z.enum(["FIRST_HALF", "SECOND_HALF"]),
+  leave_type: z.enum([
+    "PAID",
+    "SICK",
+    "CASUAL",
+    "MATERNITY",
+    "SHORT",
+    "OTHER",
+    "HALF_DAY",
+  ]),
 });
 
 export type LeaveRequestSchemaType = z.infer<typeof LeaveRequestSchema>;

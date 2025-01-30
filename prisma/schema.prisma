@@ -113,7 +113,6 @@ model LeaveRequest {
   end_date   DateTime?
   reason     String
 
-  half_day   String
   approval   ApprovalStatus   @default(PENDING)
   leave_type LeaveRequestType
   created_At DateTime         @default(now())
@@ -137,6 +136,7 @@ enum LeaveRequestType {
   CASUAL
   MATERNITY
   SHORT
+  HALF_DAY
   OTHER
 }
 

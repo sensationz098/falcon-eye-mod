@@ -77,7 +77,6 @@ export const getAllLeaveRequest = async () => {
       start_date: true,
       end_date: true,
       leave_type: true,
-      half_day: true,
       created_At: true,
       reason: true,
       approval: true,

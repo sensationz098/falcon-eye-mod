@@ -31,12 +31,12 @@ const CreatePayroll = ({ id }: { id: string }) => {
   const form = useForm<CreateSalarySchemaType>({
     resolver: zodResolver(CreateSalaySchema),
     defaultValues: {
-      basic_salary: undefined,
-      convenience: undefined,
-      deducation: undefined,
-      HRA: undefined,
-      medical: undefined,
-      other_allowences: undefined,
+      basic_salary: 0,
+      convenience: 0,
+      deducation: 0,
+      HRA: 0,
+      medical: 0,
+      other_allowences: 0,
     },
   });
 

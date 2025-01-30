@@ -8,10 +8,10 @@ const page = async () => {
       <h1 className="text-3xl font-bold">Hello, {session?.user.name} </h1>
       <StatsCard />
       <div className="flex gap-4">
-        <div className="flex flex-1 gap-2">
+        {/* <div className="flex flex-1 gap-2">
           <PieCharts />
           <BarCharts />
-        </div>
+        </div> */}
         <div className="">
           <RightSide />
         </div>

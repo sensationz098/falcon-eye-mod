@@ -43,7 +43,6 @@ const LeaveRequestForm = () => {
     resolver: zodResolver(LeaveRequestSchema),
     defaultValues: {
       reason: "",
-      half_day: "FIRST_HALF",
       leave_type: "CASUAL",
     },
   });
@@ -173,38 +172,6 @@ const LeaveRequestForm = () => {
           </div>
 
           <div className="flex flex-col p-4">
-            {/* select half day */}
-
-            <FormField
-              control={form.control}
-              name="half_day"
-              render={({ field }) => (
-                <FormItem className="flex flex-col gap-2 md:gap-4">
-                  <FormLabel className="text-base">Half Day Type</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a half day" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="FIRST_HALF">
-                        First Half ( Before lunch )
-                      </SelectItem>
-                      <SelectItem value="SECOND_HALF">
-                        Second Half ( After lunch )
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             {/* select leave type  */}
             <FormField
               control={form.control}
@@ -223,6 +190,7 @@ const LeaveRequestForm = () => {
                     </FormControl>
                     <SelectContent>
                       <SelectItem value="PAID">Paid Leave</SelectItem>
+                      <SelectItem value="HALF_DAY">Half Day</SelectItem>
                       <SelectItem value="SICK">Sick Leave</SelectItem>
                       <SelectItem value="CASUAL">Casual Leave</SelectItem>
                       <SelectItem value="MATERNITY">Maternity Leave</SelectItem>

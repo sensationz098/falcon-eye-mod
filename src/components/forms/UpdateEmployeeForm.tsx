@@ -142,7 +142,7 @@ const UpdateEmployeeForm = ({
               <FormItem>
                 <FormLabel>Employee ID</FormLabel>
                 <FormControl>
-                  <Input placeholder="employee ID" {...field} />
+                  <Input placeholder="employee ID" {...field} disabled />
                 </FormControl>
                 <FormDescription className="text-red-500">
                   This employee ID is so crucial for attendence tracking

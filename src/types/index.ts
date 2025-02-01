@@ -38,12 +38,12 @@ export const EmployeeSchema = z.object({
   emergency_contact_2: z.string().trim().optional(),
   city: z.string().trim().default("New Delhi"),
   country: z.string().trim().default("India"),
-  aadhar_no: z.string().trim().length(12, "Aadhar card must be 12 digits long"),
-  PAN_no: z
+  aadhar_no: z
     .string()
     .trim()
-    .toUpperCase()
-    .length(10, "PAN no must be 10 characters long"),
+    .length(12, "Aadhar card must be 12 digits long")
+    .optional(),
+  PAN_no: z.string().trim().toUpperCase().optional(),
   branch: z.string().trim().default("New Delhi"),
   designation: z.string().trim(),
   department: z.string().trim(),

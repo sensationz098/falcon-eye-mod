@@ -416,7 +416,7 @@ const CreateEmployeeForm = ({ _id }: { _id: string }) => {
             name="employement_type"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Gender</FormLabel>
+                <FormLabel>Employement Type</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}

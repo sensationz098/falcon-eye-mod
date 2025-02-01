@@ -156,7 +156,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
             </TableRow>
             <TableRow>
               <TableCell>Permanent Address Number (PAN)</TableCell>
-              <TableCell>{user?.Employee.PAN_no}</TableCell>
+              <TableCell>{user?.Employee.PAN_no || "Not Available"}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

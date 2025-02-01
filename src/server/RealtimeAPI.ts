@@ -69,7 +69,7 @@ export type InOutPunchData = {
   WorkTime: string;
   OverTime: string;
   BreakTime: string;
-  Status: string;
+  Status: "A" | "P";
   DateString: string;
   Remark: string;
   Erl_Out: string;

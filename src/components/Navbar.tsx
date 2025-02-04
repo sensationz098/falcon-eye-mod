@@ -30,9 +30,6 @@ const Navbar = ({ navbarProps }: { navbarProps: NavbarPropsType[] }) => {
           </div>
         </nav>
       </div>
-      <div className="">
-        <AuthButtons />
-      </div>
     </header>
   );
 };

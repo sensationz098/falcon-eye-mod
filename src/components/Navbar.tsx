@@ -25,6 +25,9 @@ const Navbar = ({ navbarProps }: { navbarProps: NavbarPropsType[] }) => {
               </Link>
             );
           })}
+          <div className="">
+            <AuthButtons />
+          </div>
         </nav>
       </div>
       <div className="">

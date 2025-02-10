@@ -17,6 +17,11 @@ export default withAuth(
     ) {
       return NextResponse.rewrite(new URL("/", request.url));
     }
+    if (request.nextauth.token?.role === "ADMIN") {
+      NextResponse.redirect(new URL("/admin", request.url));
+    } else {
+      NextResponse.redirect(new URL("/user", request.url));
+    }
   },
   {
     callbacks: {

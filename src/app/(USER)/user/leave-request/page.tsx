@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/dialog";
 import { LeaveRequest } from "@prisma/client";
 import { deleteLeaveRequest } from "@/server/USER/userServerActions";
+import { Trash } from "lucide-react";
 
 const page = async () => {
   const session = await getSession();
@@ -31,42 +32,46 @@ const page = async () => {
   });
 
   return (
-    <div>
+    <div className="flex flex-col gap-5 px-11">
       <Link href={"/user/leave-request/apply"}>
         <Button>Apply for leave request</Button>
       </Link>
 
-      <Table>
+      <Table className="">
         <TableCaption>A list of your recent leave requests.</TableCaption>
         <TableHeader>
-          <TableRow>
-            <TableHead>No.</TableHead>
-            <TableHead>Created At</TableHead>
-            <TableHead>Leave Type</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Actions</TableHead>
-          </TableRow>
+          <TableHead>Created At</TableHead>
+          <TableHead>Leave Type</TableHead>
+          <div className="hidden w-[450px] md:flex md:flex-row md:items-center md:justify-around">
+            <TableHead className="">Status</TableHead>
+            <TableHead className="">Actions</TableHead>
+          </div>
+          <TableHead className="block md:hidden">Ations</TableHead>
         </TableHeader>
-        <TableBody>
+        <TableBody className="h-16">
           {request.length != 0 ? (
-            request.map((leave, index) => (
-              <TableRow key={leave.id}>
-                <TableCell>{index + 1}</TableCell>
+            request.map((leave) => (
+              <TableRow key={leave.id} className="h-10">
                 <TableCell>{format(leave.created_At, "PPP")}</TableCell>
                 <TableCell>{leave.leave_type}</TableCell>
-                <TableCell>{leave.approval}</TableCell>
-                <TableCell className="flex gap-4">
+                <div className="hidden w-[550px] md:flex md:flex-row md:items-center md:justify-center">
+                  <TableCell>{leave.approval}</TableCell>
+                  <TableCell className="ml-14 flex gap-4">
+                    <ViewDetails leave={leave} />
+                    <Button
+                      onClick={async () => {
+                        "use server";
+                        await deleteLeaveRequest(leave.id);
+                      }}
+                      variant={"destructive"}
+                      className="rounded-[5px]"
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                </div>
+                <TableCell className="block md:hidden">
                   <ViewDetails leave={leave} />
-                  <Button
-                    onClick={async () => {
-                      "use server";
-                      await deleteLeaveRequest(leave.id);
-                    }}
-                    variant={"destructive"}
-                    className="rounded-[5px]"
-                  >
-                    Delete
-                  </Button>
                 </TableCell>
               </TableRow>
             ))
@@ -115,13 +120,27 @@ function ViewDetails({ leave }: { leave: LeaveRequest }) {
               </div>
 
               <section className="flex items-center justify-between">
-                <p>Half Day : {leave.half_day}</p>
                 <p>Leave Type : {leave.leave_type}</p>
               </section>
-              <section className="my-2">
-                <p>Reason : {leave.reason}</p>
-                <p className="text-yellow-500">{leave.approval}</p>
-              </section>
+              <div className="flex justify-between">
+                <section className="my-2">
+                  <p>Reason : {leave.reason}</p>
+                  <p className="text-yellow-500">{leave.approval}</p>
+                </section>
+                <section className="my-2">
+                  <Button
+                    onClick={async () => {
+                      "use server";
+                      await deleteLeaveRequest(leave.id);
+                    }}
+                    variant={"destructive"}
+                    className="flex w-28 flex-row items-center justify-center gap-1 text-white"
+                  >
+                    <p>Delete</p>
+                    <Trash />
+                  </Button>
+                </section>
+              </div>
             </div>
           </DialogDescription>
         </DialogHeader>

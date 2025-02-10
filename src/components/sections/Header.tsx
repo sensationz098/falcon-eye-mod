@@ -77,7 +77,7 @@ export const Header = () => {
                 Help
               </ScrollLink>
 
-              <Link href="/api/auth/signin" className="btn btn-primary">
+              <Link href="/user" className="btn btn-primary">
                 Login
               </Link>
             </nav>

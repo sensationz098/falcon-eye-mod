@@ -20,11 +20,11 @@ export type PayrollColumnType = {
   basic_salary: number;
   gross_salary: number;
   net_salary: number;
-  HRA: number | null;
-  medical: number | null;
-  convenience: number | null;
-  other_allowences: number | null;
-  deducation: number | null;
+  // HRA: number | null;
+  // medical: number | null;
+  // convenience: number | null;
+  // other_allowences: number | null;
+  // deducation: number | null;
   user: {
     name: string;
     id: string;
@@ -56,48 +56,7 @@ export const PayrollColumn: ColumnDef<PayrollColumnType>[] = [
       return <span>{formatCurrency(basic_salary)}</span>;
     },
   },
-  {
-    accessorKey: "HRA",
-    header: "HRA",
-    cell: ({ row }) => {
-      const { HRA } = row.original;
-      return <span>{formatCurrency(HRA ? HRA : 0)}</span>;
-    },
-  },
-  {
-    accessorKey: "medical",
-    header: "Medical",
-    cell: ({ row }) => {
-      const { medical } = row.original;
-      return <span>{formatCurrency(medical ? medical : 0)}</span>;
-    },
-  },
-  {
-    accessorKey: "convenience",
-    header: "Convenience",
-    cell: ({ row }) => {
-      const { convenience } = row.original;
-      return <span>{formatCurrency(convenience ? convenience : 0)}</span>;
-    },
-  },
-  {
-    accessorKey: "other_allowences",
-    header: "Other Allowences",
-    cell: ({ row }) => {
-      const { other_allowences } = row.original;
-      return (
-        <span>{formatCurrency(other_allowences ? other_allowences : 0)}</span>
-      );
-    },
-  },
-  {
-    accessorKey: "deducation",
-    header: "Deducation",
-    cell: ({ row }) => {
-      const { deducation } = row.original;
-      return <span>{formatCurrency(deducation ? deducation : 0)}</span>;
-    },
-  },
+
   {
     accessorKey: "gross_salary",
     header: "Gross Salary",

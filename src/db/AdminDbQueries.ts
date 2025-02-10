@@ -52,13 +52,13 @@ export const getAllPayroll = async () => {
     select: {
       id: true,
       basic_salary: true,
-      convenience: true,
-      deducation: true,
+      // convenience: true,
+      // deducation: true,
       gross_salary: true,
-      HRA: true,
-      medical: true,
+      // HRA: true,
+      // medical: true,
       net_salary: true,
-      other_allowences: true,
+      // other_allowences: true,
       user: {
         select: {
           id: true,

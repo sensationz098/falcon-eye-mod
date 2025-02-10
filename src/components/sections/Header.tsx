@@ -1,18 +1,18 @@
 "use client";
-import { ArrowRight, AlignJustify } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Logo1 from "@/assets/falcon1-logo.png";
 import Link from "next/link";
 import { Link as ScrollLink } from "react-scroll";
 import Image from "next/image";
-import { useState } from "react";
+// import { useState } from "react";
 
 export const Header = () => {
-  const [isClick, setIsClick] = useState(false);
+  // const [isClick, setIsClick] = useState(false);
 
-  const toggleNavbar = () => {
-    setIsClick(!isClick);
-    // console.log("toggle navbar", isClick);
-  };
+  // const toggleNavbar = () => {
+  //   setIsClick(!isClick);
+  //   // console.log("toggle navbar", isClick);
+  // };
 
   return (
     <header className="sticky top-0 z-20 backdrop-blur-sm" id="header">
@@ -34,21 +34,16 @@ export const Header = () => {
             <Image src={Logo1} alt="" className="w-16 md:w-[80]" />
 
             {/* hamburger icon */}
-            <AlignJustify
-              className={`hamburger z-50 h-7 w-8 rounded-sm md:hidden ${
-                isClick ? "isActive" : "isinActive"
-              }`}
-              onClick={toggleNavbar}
-            />
+
             {/* hamburger icon */}
 
-            <nav className="hidden items-center gap-6 text-black/60 md:flex">
+            <nav className="items-center gap-6 text-black/60 md:flex">
               <ScrollLink
                 to="home"
                 smooth={true}
                 offset={-5000}
                 duration={500}
-                className="cursor-pointer"
+                className="hidden cursor-pointer md:block"
               >
                 Home
               </ScrollLink>
@@ -58,7 +53,7 @@ export const Header = () => {
                 smooth={true}
                 offset={-100}
                 duration={500}
-                className="cursor-pointer"
+                className="hidden cursor-pointer md:block"
               >
                 How to use
               </ScrollLink>
@@ -68,7 +63,7 @@ export const Header = () => {
                 smooth={true}
                 offset={-40}
                 duration={500}
-                className="cursor-pointer"
+                className="hidden cursor-pointer md:block"
               >
                 Reviews
               </ScrollLink>
@@ -77,7 +72,7 @@ export const Header = () => {
                 smooth={true}
                 offset={100}
                 duration={500}
-                className="cursor-pointer"
+                className="hidden cursor-pointer md:block"
               >
                 Help
               </ScrollLink>

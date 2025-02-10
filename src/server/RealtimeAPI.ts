@@ -1,9 +1,17 @@
-import { format, startOfMonth, endOfMonth } from "date-fns";
+import { format } from "date-fns";
 
 const base64Auth = btoa(process.env.REALTIME_API_USERNAME! + ":" + "");
 const today = format(new Date(), "dd/MM/yyyy");
 
-export const fetchAttendence = async ({ params }: { params: string }) => {
+export const fetchAttendence = async ({
+  params,
+  start,
+  end,
+}: {
+  params: string;
+  start: string;
+  end: string;
+}) => {
   if (params === "ALL") {
     const res = await fetch(
       `https://api.etimeoffice.com/api/DownloadInOutPunchData?Empcode=${params}&ToDate=${today}`,
@@ -22,10 +30,10 @@ export const fetchAttendence = async ({ params }: { params: string }) => {
 
   if (params !== "ALL") {
     const res = await fetch(
-      `https://api.etimeoffice.com/api/DownloadInOutPunchData?Empcode=${params}&FromDate=${format(startOfMonth(new Date()), "dd/MM/yyyy")}&ToDate=${format(endOfMonth(new Date()), "dd/MM/yyyy")}
+      `https://api.etimeoffice.com/api/DownloadInOutPunchData?Empcode=${params}&FromDate=${start}&ToDate=${end}
           `,
       {
-        cache: "force-cache",
+        // cache: "force-cache",
         method: "GET",
         headers: {
           Authorization: "Basic " + base64Auth,
@@ -44,7 +52,7 @@ export const fetchPresent = async () => {
       `https://api.etimeoffice.com/api/DownloadInOutPunchData?Empcode=ALL&ToDate=${today}
       `,
       {
-        cache: "force-cache",
+        // cache: "force-cache",
         method: "GET",
         headers: {
           Authorization: "Basic " + base64Auth,

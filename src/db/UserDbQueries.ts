@@ -1,5 +1,16 @@
 import prisma from "./prisma";
 
+export const getSalary = async ({ _id }: { _id: string }) => {
+  return await prisma.payroll.findFirst({
+    where: {
+      userID: _id,
+    },
+    select: {
+      basic_salary: true,
+    },
+  });
+};
+
 export const getUserProfile = async ({ _id }: { _id: string }) => {
   return await prisma.user.findFirst({
     where: {
@@ -106,6 +117,16 @@ export const getHolidays = async () => {
   });
 };
 
+export const getAllHoliday = async () => {
+  return await prisma.holiday.findMany({
+    select: {
+      id: true,
+      holiday_date: true,
+      title: true,
+      message: true,
+    },
+  });
+};
 export const getEmpIdById = async (_id: string) => {
   return await prisma.employee.findFirst({
     where: {

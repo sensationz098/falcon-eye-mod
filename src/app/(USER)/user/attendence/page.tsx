@@ -1,57 +1,59 @@
-import { parse, isSunday, format } from "date-fns";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { parse, isSunday, format, startOfMonth, endOfMonth } from "date-fns";
+
 import { getSession } from "@/lib/utils";
-import { getEmpIdById } from "@/db/UserDbQueries";
+import { getAllHoliday, getEmpIdById, getSalary } from "@/db/UserDbQueries";
 import { fetchAttendence, InOutPunchData } from "@/server/RealtimeAPI";
 import { CalculateSalary } from "@/lib/CalculateSalary";
+import MonthPicker from "@/components/monthpicker";
+import AttendanceTable from "@/components/USER/AttendanceTable";
 
 const page = async () => {
-  const Holiday = [
-    {
-      id: 1,
-      title: "Christmas",
-      message: "Christmas",
-      holiday_date: "25/12/2024", // Ensure the correct format is used consistently
-    },
-    {
-      id: 2,
-      title: "Republic Day",
-      message: "Republic Date",
-      holiday_date: "26/01/2025", // Ensure the correct format is used consistently
-    },
-  ];
-
+  const Holiday = await getAllHoliday();
   const session = await getSession();
   const userID = await getEmpIdById(session?.user.id as string);
   const attendence = await fetchAttendence({
     params: userID?.employee_id as string,
+    start: format(startOfMonth(new Date()), "dd/MM/yyyy"),
+    end: format(endOfMonth(new Date()), "dd/MM/yyyy"),
   });
 
-  // Check if the attendance data is available
   if (
     !attendence ||
     !attendence.InOutPunchData ||
     attendence.InOutPunchData.length === 0
   ) {
-    // Handle the case where the data is missing
     return <div>No attendance data found</div>;
   }
 
   const data: InOutPunchData[] = attendence?.InOutPunchData;
-  const payrol = CalculateSalary(data, Holiday);
+  const salary = await getSalary({ _id: session?.user.id as string });
+
+  // const currentMonth = parse(
+  //   data[0].DateString,
+  //   "dd/MM/yyyy",
+  //   new Date(),
+  // ).getMonth();
+
+  // const HolidayDate = Holiday.filter((i) => {
+  //   const parsedDate =
+  //     i.holiday_date instanceof Date
+  //       ? i.holiday_date
+  //       : parse(i.holiday_date, "yyyy/MM/dd", new Date());
+  //   return parsedDate.getMonth() === currentMonth;
+  // }).map((i) => {
+  //   const holidayDate =
+  //     i.holiday_date instanceof Date
+  //       ? i.holiday_date
+  //       : parse(i.holiday_date, "yyyy/MM/dd", new Date());
+  //   return holidayDate.getDate();
+  // });
+  const payrol = CalculateSalary(data, Holiday, salary?.basic_salary as number);
 
   let TotalSunday = 0;
-  const TotalHoliday = payrol.salary;
+  const TotalHoliday = payrol.TotalHoliday;
   const totalAbsent = payrol.absentCount;
   const totalPresent = payrol.present;
+  const totalSalary = payrol.salary;
 
   // Calculate Total Sundays (WeekOffs)
   data.forEach((item) => {
@@ -60,15 +62,6 @@ const page = async () => {
       TotalSunday += 1;
     }
   });
-
-  const checkHoliday = (date: string) => {
-    const parsedDate = parse(date, "dd/MM/yyyy", new Date());
-    return Holiday.some(
-      (holiday) =>
-        parse(holiday.holiday_date, "dd/MM/yyyy", new Date()).getDate() ===
-        parsedDate.getDate(),
-    );
-  };
 
   return (
     <div>
@@ -95,66 +88,20 @@ const page = async () => {
               Total Holiday: {TotalHoliday}
             </h2>
           </div>
+          <div>
+            <h2 className="text-xl font-normal text-white">
+              Total Salary:
+              <span className="text-yellow-500">{totalSalary}</span>
+            </h2>
+            <h2 className="text-xl font-normal text-white">
+              Select Month: <MonthPicker />
+            </h2>
+          </div>
+        </div>
+        <div className="md:px-20">
+          <AttendanceTable attendence={data} />
         </div>
       </div>
-      <Table>
-        <TableCaption>A list of your recent invoices.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>No</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead>Punch In Code</TableHead>
-            <TableHead>Punch Out Code</TableHead>
-            <TableHead>Work Time</TableHead>
-            <TableHead>Late In</TableHead>
-            <TableHead>Status</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {attendence?.InOutPunchData.map((i, index) => {
-            const parsedDate = parse(i.DateString, "dd/MM/yyyy", new Date());
-            const dateString = format(parsedDate, "PP");
-
-            const isHoliday = checkHoliday(i.DateString);
-            const isWeekend = isSunday(parsedDate);
-
-            const status =
-              i.Status === "P"
-                ? isWeekend
-                  ? "Week Off"
-                  : isHoliday
-                    ? "Holiday"
-                    : "Present"
-                : isWeekend
-                  ? "Week Off"
-                  : "Absent";
-
-            return (
-              <TableRow key={index}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>{dateString}</TableCell>
-                <TableCell>{i.INTime}</TableCell>
-                <TableCell>{i.OUTTime}</TableCell>
-                <TableCell>{i.WorkTime}</TableCell>
-                <TableCell>{i.Late_In}</TableCell>
-                <TableCell
-                  className={`font-bold text-red-800 ${
-                    status === "Present"
-                      ? "text-green-500"
-                      : status === "Absent"
-                        ? "text-red-500"
-                        : status === "Holiday"
-                          ? "text-yellow-500"
-                          : "text-blue-500"
-                  }`}
-                >
-                  {status}
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
     </div>
   );
 };

@@ -8,6 +8,7 @@ import {
   isSunday,
 } from "date-fns";
 import LateDeduction from "./LateDeduction";
+
 export type DownloadInOutPunchDataType = {
   Empcode: string;
   INTime: string;
@@ -23,16 +24,17 @@ export type DownloadInOutPunchDataType = {
   Name: string;
 };
 
-export type allowedHolidaysType = {
+interface allowedHolidaysType {
   id: number;
-  title: string;
-  message: string;
-  holiday_date: string;
-};
+  holiday_date: Date | string;
+  title?: string;
+  message?: string;
+}
 
 export function CalculateSalary(
   data: DownloadInOutPunchDataType[],
   Holiday: allowedHolidaysType[],
+  salary: number,
 ) {
   const currentMonth = parse(
     data[0].DateString,
@@ -41,21 +43,27 @@ export function CalculateSalary(
   ).getMonth();
 
   const HolidayDate = Holiday.filter((i) => {
-    const parsedDate = parse(i.holiday_date, "yyyy/MM/dd", new Date());
+    const parsedDate =
+      i.holiday_date instanceof Date
+        ? i.holiday_date
+        : parse(i.holiday_date, "yyyy/MM/dd", new Date());
     return parsedDate.getMonth() === currentMonth;
   }).map((i) => {
-    return parse(i.holiday_date, "yyyy/MM/dd", new Date()).getDate();
+    const holidayDate =
+      i.holiday_date instanceof Date
+        ? i.holiday_date
+        : parse(i.holiday_date, "yyyy/MM/dd", new Date());
+    return holidayDate.getDate();
   });
+
   const absent = data.filter((i) => i.Status === "A");
   const present = data.filter((i) => i.Status === "P");
 
   let TotalAbsentCount = 0;
   absent.forEach((i) => {
     if (!isSunday(parse(i.DateString, "dd/MM/yyyy", new Date()))) {
-      console.log("Hello bhai");
       TotalAbsentCount++;
     }
-    console.log("Mera bhai", TotalAbsentCount);
   });
   let absentCount = 0;
   let sundayCount = 0;
@@ -145,16 +153,16 @@ export function CalculateSalary(
     }
   }
   const h = LateDeduction(data);
-  const perday = 25000 / 30;
+  const perday = salary / 30;
   absentCount = absentCount + h / 2;
   const deduct = perday * absentCount;
   const sundayWithSalary = perday * sundayCount;
-  const TotalSalary = 25000 - deduct + sundayWithSalary;
-
+  const TotalSalary = salary - deduct + sundayWithSalary;
   return {
     salary: Math.ceil(TotalSalary),
     present: present.length,
     absent: absentCount,
     absentCount: TotalAbsentCount,
+    TotalHoliday: HolidayDate.length,
   };
 }

@@ -33,7 +33,7 @@ export default async function AttendanceTable({
       <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead>No</TableHead>
+          {/* <TableHead>No</TableHead> */}
           <TableHead>Date</TableHead>
           {/* <div className="flex"> */}
           <div className="hidden w-[300px] justify-center md:flex">
@@ -118,7 +118,7 @@ export default async function AttendanceTable({
 
             return (
               <TableRow key={index}>
-                <TableCell>{index + 1}</TableCell>
+                {/* <TableCell>{index + 1}</TableCell> */}
                 <TableCell>{dateString}</TableCell>
 
                 <div className="hidden w-[300px] justify-between gap-10 md:flex">

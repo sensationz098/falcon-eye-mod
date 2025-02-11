@@ -7,6 +7,8 @@ const page = async () => {
 
   return (
     <div>
+      <h1>Employee Payroll Table</h1>
+      <p>total {payroll.length} Payroll Found</p>
       <PayrollDataTable columns={PayrollColumn} data={payroll} />
     </div>
   );

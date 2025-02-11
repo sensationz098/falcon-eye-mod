@@ -33,22 +33,14 @@ export default async function AttendanceTable({
       <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
         <TableRow>
-          {/* <TableHead>No</TableHead> */}
           <TableHead>Date</TableHead>
-          {/* <div className="flex"> */}
-          <div className="hidden w-[300px] justify-center md:flex">
-            <div className="px-6 py-3 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]">
-              <TableHead className="">Punch In Code</TableHead>
-            </div>
-            <div className="px-6 py-3 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]">
-              <TableHead className="">Punch Out Code</TableHead>
-            </div>
-          </div>
-          {/* </div> */}
-          <TableHead className="contain-inline-size md:hidden">
-            In-Out
+          <TableHead colSpan={1} className="hidden md:table-cell">
+            Punch In
           </TableHead>
-
+          <TableHead colSpan={1} className="hidden md:table-cell">
+            Punch Out
+          </TableHead>
+          <TableHead className="md:hidden">In-Out</TableHead>
           <TableHead>Status</TableHead>
         </TableRow>
       </TableHeader>
@@ -118,46 +110,33 @@ export default async function AttendanceTable({
 
             return (
               <TableRow key={index}>
-                {/* <TableCell>{index + 1}</TableCell> */}
                 <TableCell>{dateString}</TableCell>
-
-                <div className="hidden w-[300px] justify-between gap-10 md:flex">
-                  <div className="px-6 py-3 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]">
-                    <TableCell
-                      className={`font-bold ${
-                        LateInTime === "ontime"
-                          ? "text-green-500"
-                          : LateInTime === "Half"
-                            ? "text-red-500"
-                            : LateInTime === "Late In"
-                              ? "text-yellow-500"
-                              : LateInTime == "No"
-                                ? "text-blue-500"
-                                : "text-white"
-                      }`}
-                    >
-                      {i.INTime}
-                    </TableCell>
-                  </div>
-                  <div className="px-14 py-3 text-right align-bottom font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]">
-                    <TableCell
-                      className={`font-bold ${
-                        LateOutTime === "ontime"
-                          ? "text-green-500"
-                          : LateOutTime === "Half"
-                            ? "text-red-500"
-                            : LateOutTime === "Late Out"
-                              ? "text-yellow-500"
-                              : LateOutTime == "No"
-                                ? "text-blue-500"
-                                : "text-white"
-                      }`}
-                    >
-                      {i.OUTTime}
-                    </TableCell>
-                  </div>
-                </div>
-
+                <TableCell
+                  className={`hidden font-bold md:table-cell ${
+                    LateInTime === "ontime"
+                      ? "text-green-500"
+                      : LateInTime === "Half"
+                        ? "text-red-500"
+                        : LateInTime === "Late In"
+                          ? "text-yellow-500"
+                          : "text-white"
+                  }`}
+                >
+                  {i.INTime}
+                </TableCell>
+                <TableCell
+                  className={`hidden font-bold md:table-cell ${
+                    LateOutTime === "ontime"
+                      ? "text-green-500"
+                      : LateOutTime === "Half"
+                        ? "text-red-500"
+                        : LateOutTime === "Late Out"
+                          ? "text-yellow-500"
+                          : "text-white"
+                  }`}
+                >
+                  {i.OUTTime}
+                </TableCell>
                 <TableCell className="md:hidden">
                   <span
                     className={`font-bold ${
@@ -192,7 +171,7 @@ export default async function AttendanceTable({
                   </span>
                 </TableCell>
                 <TableCell
-                  className={`font-bold text-red-800 ${
+                  className={`font-bold ${
                     status === "Present"
                       ? "text-green-500"
                       : status === "Absent"

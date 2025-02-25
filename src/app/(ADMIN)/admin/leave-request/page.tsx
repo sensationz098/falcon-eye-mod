@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 // import LeaveRequest from "@/components/ADMIN/LeaveRequest";
 import { Button } from "@/components/ui/button";
 import {

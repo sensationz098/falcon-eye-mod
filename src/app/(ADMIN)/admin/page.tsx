@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { RightSide, StatsCard } from "@/components";
 import { getSession } from "@/lib/utils";
 

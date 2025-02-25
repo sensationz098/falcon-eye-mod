@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { DataTable } from "@/components/ui/DataTable";
 import { EmployeeColumn } from "@/components/tables/EmployeeColumn";
 import { getAllEmployee } from "@/db/AdminDbQueries";

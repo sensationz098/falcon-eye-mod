@@ -29,7 +29,6 @@ export default function MonthPicker() {
         scroll: false,
       });
     } catch (error) {
-      console.error("Failed to change month:", error);
       // Redirect to login if authentication error
       if (error instanceof Error && error.message.includes("not valid JSON")) {
         router.push("/auth/signin");

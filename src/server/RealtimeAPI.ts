@@ -65,7 +65,7 @@ export const fetchPresent = async () => {
     return { status: true, present: attendence.InOutPunchData.length };
   } catch (err: Error | unknown) {
     const error = err instanceof Error ? err.message : "Faild to fetch";
-    console.log(error);
+
     return { status: false, error: error };
   }
 };

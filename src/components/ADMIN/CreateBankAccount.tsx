@@ -40,7 +40,6 @@ const CreateBankAccount = ({ id }: { id: string }) => {
   });
 
   async function onSubmit(values: CreateBankAccountSchemaType) {
-    console.log(values);
     const res = await createBankAccountDetails({ id, values });
 
     if (res.status) {

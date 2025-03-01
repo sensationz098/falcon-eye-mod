@@ -10,7 +10,6 @@ export const createLeaveRequest = async (
   emp_name: string,
 ) => {
   try {
-    console.log(values, userID, emp_name);
     await prisma.leaveRequest.create({
       data: {
         ...values,

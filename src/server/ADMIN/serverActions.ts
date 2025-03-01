@@ -207,7 +207,7 @@ export const actionLeaveRequest = async ({
     }
   } catch (err: Error | unknown) {
     const error = err instanceof Error ? err.message : "Internal Server Error";
-    console.log(error);
+    return { status: false, error: error };
   }
 };
 

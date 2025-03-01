@@ -155,6 +155,13 @@ export function CalculateSalary(
   const h = LateDeduction(data);
   const perday = salary / 30;
   absentCount = absentCount + h / 2;
+
+  if (absentCount === 0.5) {
+    absentCount = 0;
+  }
+  if (absentCount >= 1) {
+    absentCount = absentCount - 1;
+  }
   const deduct = perday * absentCount;
   const sundayWithSalary = perday * sundayCount;
   const TotalSalary = salary - deduct + sundayWithSalary;

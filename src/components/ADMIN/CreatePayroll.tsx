@@ -41,7 +41,6 @@ const CreatePayroll = ({ id }: { id: string }) => {
   });
 
   async function onSubmit(values: CreateSalarySchemaType) {
-    console.log(values);
     const res = await createPayrollAction({ values, id });
 
     if (res.status) {

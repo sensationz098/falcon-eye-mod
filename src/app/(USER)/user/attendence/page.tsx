@@ -90,7 +90,6 @@ const page = async ({ searchParams }: { searchParams: { month?: string } }) => {
 };
 
 export async function FetchCalculateAttendance(month: Date) {
-  console.log("MOnths", month);
   const Holiday = await getAllHoliday();
   const session = await getSession();
   const userID = await getEmpIdById(session?.user.id as string);

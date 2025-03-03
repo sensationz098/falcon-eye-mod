@@ -10,10 +10,9 @@ import AttendanceTable from "@/components/USER/AttendanceTable";
 import AttendanceWrapper from "@/components/USER/AttendanceWrapper";
 
 const page = async ({ searchParams }: { searchParams: { month?: string } }) => {
+  const { month } = await searchParams;
   const currentMonth = new Date();
-  const selectedMonth = searchParams.month
-    ? parseInt(searchParams.month)
-    : currentMonth.getMonth();
+  const selectedMonth = month ? parseInt(month) : currentMonth.getMonth();
 
   const selectedDate = new Date();
   selectedDate.setMonth(selectedMonth);

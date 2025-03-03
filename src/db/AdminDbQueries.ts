@@ -1,4 +1,5 @@
 "use server";
+
 import prisma from "./prisma";
 
 export const getAllUsers = async () => {
@@ -53,13 +54,11 @@ export const getAllPayroll = async () => {
     select: {
       id: true,
       basic_salary: true,
-      // convenience: true,
-      // deducation: true,
+
       gross_salary: true,
-      // HRA: true,
-      // medical: true,
+
       net_salary: true,
-      // other_allowences: true,
+
       user: {
         select: {
           id: true,
@@ -116,4 +115,21 @@ export const upcomingBirthdays = async () => {
     return filterMonth === currentMonth;
   });
   return filteredByMonth;
+};
+
+export const totalDepartmentChart = async () => {
+  const department = await prisma.employee.groupBy({
+    by: ["department"],
+    _count: {
+      department: true,
+    },
+  });
+
+  const dep = department.map((i) => {
+    return {
+      name: i.department,
+      count: i._count.department,
+    };
+  });
+  return dep;
 };

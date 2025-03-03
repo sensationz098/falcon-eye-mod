@@ -7,7 +7,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     <>
       <Navbar navbarProps={AdminNavbarProps} />
       <div className="w-full">
-        <div className="mx-20">{children}</div>
+        <div className="mx-0 md:mx-10">{children}</div>
       </div>
     </>
   );

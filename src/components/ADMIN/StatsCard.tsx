@@ -21,7 +21,7 @@ const StatsCard = async () => {
   ];
 
   return (
-    <div className="my-2 flex w-full items-center gap-2">
+    <div className="my-6 flex w-full items-center gap-2">
       {stats.map((i) => {
         return (
           <Card

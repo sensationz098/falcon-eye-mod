@@ -70,8 +70,8 @@ const Page = async ({
           <h1 className="mt-14 w-full text-center text-5xl font-bold text-[#3576DF]">
             Attendance
           </h1>
-          <div className="my-8 flex flex-col items-center justify-evenly gap-10 md:flex-col">
-            <div className="flex w-full items-center justify-around">
+          <div className="my-8 flex flex-col items-center justify-evenly gap-10">
+            <div className="flex w-full flex-col items-center justify-around gap-5 md:flex-row">
               <h2 className="text-xl font-normal text-white">
                 Total Present:{" "}
                 <span className="text-green-500">{totalPresent}</span>
@@ -85,7 +85,7 @@ const Page = async ({
                 <span className="text-yellow-500">{TotalSunday}</span>
               </h2>
             </div>
-            <div className="flex w-full items-center justify-around">
+            <div className="flex w-full flex-col items-center justify-around gap-5 md:flex-row">
               <h2 className="text-xl font-normal text-white">
                 Total Holiday: {TotalHoliday}
               </h2>

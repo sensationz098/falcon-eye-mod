@@ -42,13 +42,11 @@ export const CallToAction = () => {
           />
         </div>
         <div className="mt-10 flex justify-center gap-2">
-          <button className="btn btn-text gap-1">
-            <Link href={"/admin"}>
-              <button className="btn btn-primary">Go to Admin</button>
-            </Link>
-            <span>Learn More</span>
-            <ArrowRight className="h-5 w-5" />
-          </button>
+          <Link href={"/admin"}>
+            <button className="btn btn-primary">Go to Admin</button>
+          </Link>
+          <span>Learn More</span>
+          <ArrowRight className="h-5 w-5" />
         </div>
       </div>
     </section>

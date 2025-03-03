@@ -9,8 +9,8 @@ export const fetchAttendence = async ({
   end,
 }: {
   params: string;
-  start: string;
-  end: string;
+  start?: string;
+  end?: string;
 }) => {
   if (params === "ALL") {
     const res = await fetch(

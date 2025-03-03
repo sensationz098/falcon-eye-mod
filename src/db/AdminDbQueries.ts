@@ -1,3 +1,4 @@
+"use server";
 import prisma from "./prisma";
 
 export const getAllUsers = async () => {
@@ -109,6 +110,10 @@ export const upcomingBirthdays = async () => {
       date_of_birth: true,
     },
   });
-
-  return birthday;
+  const currentMonth = new Date().getMonth();
+  const filteredByMonth = birthday.filter((i) => {
+    const filterMonth = i.date_of_birth?.getMonth();
+    return filterMonth === currentMonth;
+  });
+  return filteredByMonth;
 };

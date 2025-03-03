@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import { RightSide, StatsCard } from "@/components";
+import { BarCharts, PieCharts, RightSide, StatsCard } from "@/components";
 import { getSession } from "@/lib/utils";
 
 const page = async () => {
@@ -9,11 +9,11 @@ const page = async () => {
     <div className="mx-8">
       <h1 className="text-3xl font-bold">Hello, {session?.user.name} </h1>
       <StatsCard />
-      <div className="flex gap-4">
-        {/* <div className="flex flex-1 gap-2">
-          <PieCharts /> 
-          <BarCharts />
-        </div> */}
+      <div className="grid w-full grid-cols-3 gap-4">
+        <div className="flex flex-1 gap-2">
+          <PieCharts />
+        </div>
+        <BarCharts />
         <div className="">
           <RightSide />
         </div>

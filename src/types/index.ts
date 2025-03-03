@@ -154,13 +154,13 @@ export const HolidaySchema = z.object({
     .string()
     .trim()
     .min(3, "the holiday title must be 3 characters long")
-    .max(30, "only 30 character allowed")
+    .max(50, "only 50 character allowed")
     .toUpperCase(),
   message: z
     .string()
     .trim()
     .min(3, "the message should be 3 characters long")
-    .max(50, "only 50 characters allowed"),
+    .max(100, "only 100 characters allowed"),
   holiday_date: z.date(),
 });
 

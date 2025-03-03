@@ -21,7 +21,7 @@ const StatsCard = async () => {
   ];
 
   return (
-    <div className="my-6 flex w-full items-center gap-2">
+    <div className="my-6 grid w-full grid-cols-2 grid-rows-2 items-center gap-5 md:grid-cols-4 md:grid-rows-1">
       {stats.map((i) => {
         return (
           <Card
@@ -29,14 +29,14 @@ const StatsCard = async () => {
             className="w-full transition-all duration-500 hover:border hover:border-primary"
           >
             <div className="relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-              <div className="absolute mx-4 -mt-4 grid h-16 w-16 place-items-center overflow-hidden rounded-xl bg-gradient-to-tr from-blue-600 to-blue-400 bg-clip-border text-white shadow-lg shadow-blue-500/40">
+              <div className="absolute mx-4 -mt-4 grid size-12 place-items-center overflow-hidden rounded-xl bg-gradient-to-tr from-blue-600 to-blue-400 bg-clip-border text-white shadow-lg shadow-blue-500/40 md:size-16">
                 <i.icon />
               </div>
               <div className="p-4 text-right">
-                <p className="text-blue-gray-600 block font-sans text-xl font-semibold leading-normal antialiased">
+                <p className="text-blue-gray-600 block font-sans text-xs font-semibold leading-normal antialiased md:text-xl">
                   {i.title}
                 </p>
-                <h4 className="text-blue-gray-900 block font-sans text-xl font-semibold leading-snug tracking-normal antialiased">
+                <h4 className="text-blue-gray-900 block font-sans text-xs font-semibold leading-snug tracking-normal antialiased md:text-xl">
                   {i.value}
                 </h4>
               </div>

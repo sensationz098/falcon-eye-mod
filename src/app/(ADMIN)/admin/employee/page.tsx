@@ -8,10 +8,7 @@ const page = async () => {
   const employees = await getAllEmployee();
 
   return (
-    <div>
-      <h1>Employee Table</h1>
-      <p>total {employees.length} employee found</p>
-
+    <div className="my-4">
       <DataTable columns={EmployeeColumn} data={employees} />
     </div>
   );

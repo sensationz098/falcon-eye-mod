@@ -21,7 +21,7 @@ const page = async () => {
   return (
     <div>
       {/* <h1>List of all holidays</h1> */}
-      <div className="flex h-[900px] w-full flex-col justify-around py-12 md:flex-row">
+      <div className="mx-auto flex h-[900px] w-full flex-col justify-around py-12 md:flex-row">
         <Table>
           <TableCaption>A list of your recent invoices.</TableCaption>
           <TableHeader>
@@ -40,8 +40,8 @@ const page = async () => {
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{format(i.holiday_date, "PPP")}</TableCell>
                   <TableCell>{i.title}</TableCell>
-                  <TableCell>{i.message}</TableCell>
-                  <TableCell>
+                  <TableCell className="">{i.message}</TableCell>
+                  <TableCell className="">
                     <Button
                       variant={"destructive"}
                       onClick={async () => {
@@ -61,7 +61,7 @@ const page = async () => {
         {/* <Hello /> */}
         {/* </div> */}
 
-        <div className="w-1/4 rounded-3xl bg-gray-700 p-4">
+        <div className="flex h-fit w-4/5 justify-center rounded-3xl bg-gray-700 p-10 md:w-1/4">
           <CreateHolidayForm />
         </div>
       </div>

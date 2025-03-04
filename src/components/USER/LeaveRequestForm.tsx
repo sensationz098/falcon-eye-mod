@@ -71,7 +71,10 @@ const LeaveRequestForm = () => {
   return (
     <div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 px-20"
+        >
           {/* start date */}
 
           <div className="flex flex-col items-center gap-4 md:flex-row md:gap-5">

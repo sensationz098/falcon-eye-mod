@@ -97,7 +97,6 @@ const UpdateEmployeeForm = ({
 
   return (
     <div>
-      <h1>Update Employee</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField

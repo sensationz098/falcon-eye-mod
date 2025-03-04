@@ -20,7 +20,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { LeaveRequest } from "@prisma/client";
 import { deleteLeaveRequest } from "@/server/USER/userServerActions";
 import { Trash } from "lucide-react";
 
@@ -33,20 +32,24 @@ const page = async () => {
 
   return (
     <div className="flex flex-col gap-5 px-11">
-      <Link href={"/user/leave-request/apply"}>
+      <Link
+        className="flex w-full justify-end"
+        href={"/user/leave-request/apply"}
+      >
         <Button>Apply for leave request</Button>
       </Link>
 
       <Table className="">
         <TableCaption>A list of your recent leave requests.</TableCaption>
         <TableHeader>
-          <TableHead>Created At</TableHead>
-          <TableHead>Leave Type</TableHead>
-          <div className="hidden w-[450px] md:flex md:flex-row md:items-center md:justify-around">
+          <TableRow>
+            <TableHead>Created At</TableHead>
+            <TableHead>Leave Type</TableHead>
+            {/* <div className="hidden w-[450px] md:flex md:flex-row md:items-center md:justify-around"> */}
             <TableHead className="">Status</TableHead>
-            <TableHead className="">Actions</TableHead>
-          </div>
-          <TableHead className="block md:hidden">Ations</TableHead>
+            <TableHead className="pl-36">Actions</TableHead>
+            {/* </div> */}
+          </TableRow>
         </TableHeader>
         <TableBody className="h-16">
           {request.length != 0 ? (
@@ -54,25 +57,22 @@ const page = async () => {
               <TableRow key={leave.id} className="h-10">
                 <TableCell>{format(leave.created_At, "PPP")}</TableCell>
                 <TableCell>{leave.leave_type}</TableCell>
-                <div className="hidden w-[550px] md:flex md:flex-row md:items-center md:justify-center">
-                  <TableCell>{leave.approval}</TableCell>
-                  <TableCell className="ml-14 flex gap-4">
-                    <ViewDetails leave={leave} />
-                    <Button
-                      onClick={async () => {
-                        "use server";
-                        await deleteLeaveRequest(leave.id);
-                      }}
-                      variant={"destructive"}
-                      className="rounded-[5px]"
-                    >
-                      Delete
-                    </Button>
-                  </TableCell>
-                </div>
-                <TableCell className="block md:hidden">
+                {/* <div className="hidden w-[550px] md:flex md:flex-row md:items-center md:justify-center"> */}
+                <TableCell>{leave.approval}</TableCell>
+                <TableCell className="ml-14 flex gap-4">
                   <ViewDetails leave={leave} />
+                  <Button
+                    onClick={async () => {
+                      "use server";
+                      await deleteLeaveRequest(leave.id);
+                    }}
+                    variant={"destructive"}
+                    className="rounded-[5px]"
+                  >
+                    Delete
+                  </Button>
                 </TableCell>
+                {/* </div> */}
               </TableRow>
             ))
           ) : (
@@ -89,11 +89,27 @@ const page = async () => {
 };
 
 export default page;
-
-function ViewDetails({ leave }: { leave: LeaveRequest }) {
+export type LeaveRequest = {
+  id: number;
+  emp_name: string;
+  start_date: Date;
+  end_date: Date | null;
+  reason: string;
+  approval: "ACCEPT" | "REJECT" | "PENDING" | "CANCEL";
+  leave_type:
+    | "PAID"
+    | "SICK"
+    | "CASUAL"
+    | "MATERNITY"
+    | "SHORT"
+    | "HALF_DAY"
+    | "OTHER";
+  created_At: Date;
+};
+export function ViewDetails({ leave }: { leave: LeaveRequest }) {
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild className="bg-green-800">
         <Button variant={"secondary"}>View Leave</Button>
       </DialogTrigger>
       <DialogContent>

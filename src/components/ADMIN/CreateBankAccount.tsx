@@ -54,7 +54,7 @@ const CreateBankAccount = ({ id }: { id: string }) => {
     }
   }
   return (
-    <div>
+    <div className="mx-16">
       <Dialog>
         <DialogTrigger asChild>
           <Button>Enter Bank Details</Button>

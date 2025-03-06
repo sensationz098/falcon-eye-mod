@@ -28,7 +28,6 @@ type departmentType = {
   count: number;
 };
 export default function BarCharts({ dep }: { dep: departmentType[] }) {
-  console.log("HELLO", dep);
   return (
     <Card className="">
       <CardHeader>

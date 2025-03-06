@@ -54,18 +54,25 @@ export default async function AttendanceTable({
             const isHoliday = await checkHoliday(i.DateString);
             const isWeekend = isSunday(parsedDate);
 
-            const status =
-              i.Status === "P"
-                ? isWeekend
-                  ? "Week Off"
-                  : isHoliday
-                    ? "Holiday"
-                    : "Present"
-                : isWeekend
-                  ? "Week Off"
-                  : isHoliday
-                    ? "Holiday"
-                    : "Absent";
+            let status = "";
+            if (i.Status === "P" && isWeekend) {
+              status = "Weekend On";
+            } else if (i.Status === "P" && isHoliday) {
+              status = "Holiday On";
+            } else {
+              status =
+                i.Status === "P"
+                  ? isWeekend
+                    ? "Week Off"
+                    : isHoliday
+                      ? "Holiday"
+                      : "Present"
+                  : isWeekend
+                    ? "Week Off"
+                    : isHoliday
+                      ? "Holiday"
+                      : "Absent";
+            }
 
             const LateIn = i.INTime.split(":");
             const LateInHours = parseInt(LateIn[0]);
@@ -178,7 +185,9 @@ export default async function AttendanceTable({
                         ? "text-red-500"
                         : status === "Holiday"
                           ? "text-yellow-500"
-                          : "text-blue-500"
+                          : status === "Holiday On" || status === "Weekend On"
+                            ? "text-pink-500"
+                            : "text-blue-600"
                   }`}
                 >
                   {status}

@@ -15,6 +15,20 @@ export const getAllUsers = async () => {
   });
 };
 
+export const getUser = async (id: string) => {
+  return await prisma.user.findFirst({
+    where: {
+      id: id,
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+    },
+  });
+};
+
 export const getAllEmployee = async () => {
   return await prisma.employee.findMany({
     select: {

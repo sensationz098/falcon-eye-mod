@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { getEmployeeById } from "@/db/AdminDbQueries";
+import { getEmployeeById, getUser } from "@/db/AdminDbQueries";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDate } from "date-fns";
@@ -16,11 +16,13 @@ import { formatCurrency, formatNumber } from "@/lib/utils";
 import CreatePayroll from "@/components/ADMIN/CreatePayroll";
 import { deleteUser } from "@/server/ADMIN/serverActions";
 import { redirect } from "next/navigation";
+import UpdateUser from "@/components/ADMIN/UpdateUser";
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const _id = (await params).id;
 
   const user = await getEmployeeById(_id);
+  const updateUser = await getUser(_id);
 
   if (user?.Employee === null) {
     return (
@@ -74,6 +76,8 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
             <Link href={`/admin/employee/update/${_id}`}>
               <Button>Update Employee</Button>
             </Link>
+
+            <UpdateUser user={updateUser!} />
           </section>
         </CardContent>
       </Card>

@@ -207,7 +207,7 @@ export const actionLeaveRequest = async ({
     }
   } catch (err: Error | unknown) {
     const error = err instanceof Error ? err.message : "Internal Server Error";
-    console.log(error);
+    return { status: false, error: error };
   }
 };
 
@@ -226,9 +226,32 @@ export const updateEmployeeDetails = async (
 
     revalidatePath("/admin/employee", "page");
     return { status: true, message: "Updated successfully" };
+    revalidatePath("/admin/employee", "page");
+    return { status: true, message: "Updated successfully" };
   } catch (err: Error | unknown) {
     const error = err instanceof Error ? err.message : "Internal server error";
 
+    return { status: false, error: error };
+  }
+};
+
+export const updateUser = async (values: UserSchemaType) => {
+  try {
+    await prisma.user.update({
+      where: {
+        email: values.email,
+      },
+      data: {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        role: values.role,
+      },
+    });
+
+    return { status: true, message: "Updated successfully" };
+  } catch (err: Error | unknown) {
+    const error = err instanceof Error ? err.message : "Internal Server Error";
     return { status: false, error: error };
   }
 };

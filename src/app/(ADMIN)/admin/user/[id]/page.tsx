@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { getEmployeeById } from "@/db/AdminDbQueries";
+import { getEmployeeById, getUser } from "@/db/AdminDbQueries";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDate } from "date-fns";
@@ -14,14 +14,15 @@ import {
 } from "@/components/ui/table";
 import { formatCurrency, formatNumber } from "@/lib/utils";
 import CreatePayroll from "@/components/ADMIN/CreatePayroll";
-import CreateBankAccount from "@/components/ADMIN/CreateBankAccount";
 import { deleteUser } from "@/server/ADMIN/serverActions";
 import { redirect } from "next/navigation";
+import UpdateUser from "@/components/ADMIN/UpdateUser";
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const _id = (await params).id;
 
   const user = await getEmployeeById(_id);
+  const updateUser = await getUser(_id);
 
   if (user?.Employee === null) {
     return (
@@ -46,21 +47,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   }
   return (
     <div>
-      <Button
-        onClick={async () => {
-          "use server";
-          await deleteUser(_id);
-        }}
-        variant={"destructive"}
-      >
-        Delete User
-      </Button>
-      <section>
-        <Link href={`/admin/employee/update/${_id}`}>
-          <Button>Update Employee</Button>
-        </Link>
-      </section>
-      <Card>
+      <Card className="mx-16 my-2">
         <CardHeader>
           <CardTitle>{user?.Employee?.name}</CardTitle>
         </CardHeader>
@@ -74,6 +61,24 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
               ? formatDate(user?.Employee.date_of_joining, "PPP")
               : "N/A"}
           </p>
+        </CardContent>
+        <CardContent>
+          <section className="grid w-1/4 grid-cols-2 gap-5">
+            <Button
+              onClick={async () => {
+                "use server";
+                await deleteUser(_id);
+              }}
+              variant={"destructive"}
+            >
+              Delete User
+            </Button>
+            <Link href={`/admin/employee/update/${_id}`}>
+              <Button>Update Employee</Button>
+            </Link>
+
+            <UpdateUser user={updateUser!} />
+          </section>
         </CardContent>
       </Card>
 
@@ -169,9 +174,10 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
         {user?.payroll === null ? (
           <CreatePayroll id={_id} />
         ) : (
-          <div className="my-3">
-            <h1 className="my-2">Employee Salary Details</h1>
-            <Table className="table-auto border">
+          <div className="my-2 flex flex-col items-center justify-center px-16">
+            <hr className="my-8 h-px w-full border-0 bg-gray-700 text-white" />
+            <h1 className="text-xl font-bold">Employee Salary Details</h1>
+            <Table className="mt-4 border">
               <TableCaption>Employee Salary Info</TableCaption>
               <TableHeader>
                 <TableRow>
@@ -246,10 +252,11 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
         {/* bank account detials section */}
 
-        {user?.bank === null ? (
+        {/* {user?.bank === null ? (
           <CreateBankAccount id={_id} />
         ) : (
           <div className="my-3">
+            <hr className="my-8 h-px w-full border-0 bg-gray-700 text-white" />
             <h1 className="my-2">Bank Account Details</h1>
             <Table className="table-auto border">
               <TableCaption>Bank Account Info</TableCaption>
@@ -285,7 +292,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
               </TableBody>
             </Table>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

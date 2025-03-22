@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-// import LeaveRequest from "@/components/ADMIN/LeaveRequest";
+import { ViewDetails } from "@/app/(USER)/user/leave-request/page";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -28,35 +28,24 @@ const page = async () => {
         <TableCaption>All Leave Request</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>Id</TableHead>
             <TableHead>Employee name</TableHead>
-            <TableHead>Start Date</TableHead>
-            <TableHead>End Date</TableHead>
             <TableHead>Leave Type</TableHead>
             <TableHead>Created At</TableHead>
-            <TableHead>Reason</TableHead>
             <TableHead>Approval</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead className="pl-24">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {leaves.map((leave) => (
             <TableRow key={leave.id}>
               <TableCell>{leave.emp_name}</TableCell>
-              <TableCell>{leave.emp_name}</TableCell>
-              <TableCell>{format(leave.start_date, "PPP")}</TableCell>
-              <TableCell>
-                {format(
-                  leave.end_date ? leave.end_date : leave.start_date,
-                  "PPP",
-                )}
-              </TableCell>
+
               <TableCell>{leave.leave_type}</TableCell>
               <TableCell>{format(leave.created_At, "PPP")}</TableCell>
-              <TableCell>{leave.reason}</TableCell>
               <TableCell>{leave.approval}</TableCell>
               <TableCell>
                 <Button
+                  className="bg-orange-500"
                   variant={"default"}
                   onClick={async () => {
                     "use server";
@@ -69,6 +58,7 @@ const page = async () => {
                   Approve
                 </Button>
                 <Button
+                  className="bg-white text-blue-800"
                   onClick={async () => {
                     "use server";
                     await actionLeaveRequest({
@@ -80,6 +70,7 @@ const page = async () => {
                 >
                   Delete
                 </Button>
+                <ViewDetails leave={leave} />
               </TableCell>
             </TableRow>
           ))}

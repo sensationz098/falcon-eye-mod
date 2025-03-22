@@ -1,3 +1,5 @@
+"use server";
+
 import prisma from "./prisma";
 
 export const getAllUsers = async () => {
@@ -9,6 +11,20 @@ export const getAllUsers = async () => {
       password: true,
       role: true,
       created_At: true,
+    },
+  });
+};
+
+export const getUser = async (id: string) => {
+  return await prisma.user.findFirst({
+    where: {
+      id: id,
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
     },
   });
 };
@@ -52,13 +68,11 @@ export const getAllPayroll = async () => {
     select: {
       id: true,
       basic_salary: true,
-      // convenience: true,
-      // deducation: true,
+
       gross_salary: true,
-      // HRA: true,
-      // medical: true,
+
       net_salary: true,
-      // other_allowences: true,
+
       user: {
         select: {
           id: true,
@@ -109,6 +123,27 @@ export const upcomingBirthdays = async () => {
       date_of_birth: true,
     },
   });
+  const currentMonth = new Date().getMonth();
+  const filteredByMonth = birthday.filter((i) => {
+    const filterMonth = i.date_of_birth?.getMonth();
+    return filterMonth === currentMonth;
+  });
+  return filteredByMonth;
+};
 
-  return birthday;
+export const totalDepartmentChart = async () => {
+  const department = await prisma.employee.groupBy({
+    by: ["department"],
+    _count: {
+      department: true,
+    },
+  });
+
+  const dep = department.map((i) => {
+    return {
+      name: i.department,
+      count: i._count.department,
+    };
+  });
+  return dep;
 };

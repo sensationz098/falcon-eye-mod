@@ -1,6 +1,8 @@
 "use client";
 import { ReactNode, Suspense } from "react";
 import { AttendanceContext } from "@/context/AttendanceContext";
+import { AttendanceSkeleton } from "../AttendanceSkeleton";
+// import { Skeleton } from "../ui/skeleton";
 
 interface AttendanceWrapperProps {
   children: ReactNode;
@@ -17,7 +19,7 @@ export default function AttendanceWrapper({
     <AttendanceContext.Provider
       value={{ months: currentMonth, setMonths: onMonthChange }}
     >
-      <Suspense fallback={<h1>Loading</h1>}>{children}</Suspense>
+      <Suspense fallback={<AttendanceSkeleton />}>{children}</Suspense>
     </AttendanceContext.Provider>
   );
 }

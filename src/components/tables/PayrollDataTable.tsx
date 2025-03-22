@@ -25,11 +25,13 @@ import { useState } from "react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  payrollLength: number;
 }
 
 export function PayrollDataTable<TData, TValue>({
   columns,
   data,
+  payrollLength,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
@@ -45,9 +47,9 @@ export function PayrollDataTable<TData, TValue>({
   });
 
   return (
-    <div>
+    <div className="my-5">
       {/* search input fields */}
-      <div className="flex items-center py-4">
+      <div className="flex items-center justify-between py-4">
         <Input
           placeholder="Filter Name..."
           value={(table.getColumn("user")?.getFilterValue() as string) ?? ""}
@@ -56,6 +58,8 @@ export function PayrollDataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
+
+        <p>total {payrollLength} Payroll Found</p>
       </div>
 
       {/* data table */}

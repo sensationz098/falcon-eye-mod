@@ -10,7 +10,7 @@ import {
 } from "./ui/select";
 import { useRouter } from "next/navigation";
 
-export default function MonthPicker() {
+export default function MonthPickerAdmin({ emp }: { emp: string }) {
   const router = useRouter();
   const context = useContext(AttendanceContext);
   if (!context)
@@ -25,7 +25,7 @@ export default function MonthPicker() {
       setMonths(monthNumber);
 
       // Use replace instead of push to force a full page refresh
-      await router.replace(`/user/attendence?month=${monthNumber}`, {
+      await router.replace(`/admin/attendence/${emp}?month=${monthNumber}`, {
         scroll: false,
       });
     } catch (error) {

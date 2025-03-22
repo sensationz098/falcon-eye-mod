@@ -18,10 +18,10 @@ export type EmployeeColumnType = {
   id: string;
   employee_id: string;
   name: string;
-  email: string;
-  primary_contact: string;
-  designation: string;
-  department: string;
+  email: string | null;
+  primary_contact: string | null;
+  designation: string | null;
+  department: string | null;
   employement_type: string;
   userID: string;
   user: {
@@ -94,7 +94,7 @@ export const EmployeeColumn: ColumnDef<EmployeeColumnType>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(user.email)}
+              onClick={() => navigator.clipboard.writeText(user.email!)}
             >
               Copy Email
             </DropdownMenuItem>

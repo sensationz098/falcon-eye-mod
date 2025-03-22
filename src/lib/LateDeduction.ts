@@ -40,7 +40,8 @@ export default function LateDeduction(data: DownloadInOutPunchDataType[]) {
       }
     }
   });
-  return H + Lat / 3;
+
+  return H + Math.floor(Lat / 3);
 }
 
 function formatDatefromString(DateString: string, timeString: string) {

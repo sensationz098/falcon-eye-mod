@@ -9,13 +9,16 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <div>
-      <h1>Update Employee Details {_id}</h1>
-
-      {user?.payroll !== null ? (
-        <UpdatePayrollDetails payroll={user?.payroll} />
-      ) : (
-        ""
-      )}
+      <div>
+        {user?.payroll !== null ? (
+          <div className="flex gap-5 py-14">
+            <h1>Update Employee</h1>
+            <UpdatePayrollDetails payroll={user?.payroll} />
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
       <UpdateEmployeeForm employee={user?.Employee} />
     </div>
   );

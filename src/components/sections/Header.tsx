@@ -4,20 +4,10 @@ import Logo1 from "@/assets/falcon1-logo.png";
 import Link from "next/link";
 import { Link as ScrollLink } from "react-scroll";
 import Image from "next/image";
-// import { useState } from "react";
 
 export const Header = () => {
-  // const [isClick, setIsClick] = useState(false);
-
-  // const toggleNavbar = () => {
-  //   setIsClick(!isClick);
-  //   // console.log("toggle navbar", isClick);
-  // };
-
   return (
     <header className="sticky top-0 z-20 backdrop-blur-sm" id="header">
-      {/* sidebar component */}
-
       {/* sidebar component */}
       <div className="relative flex items-center justify-center gap-3 bg-black py-3 text-sm text-white">
         <p className="hidden text-white/60 md:block">

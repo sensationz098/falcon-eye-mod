@@ -10,10 +10,9 @@ import AttendanceTable from "@/components/USER/AttendanceTable";
 import AttendanceWrapper from "@/components/USER/AttendanceWrapper";
 
 const page = async ({ searchParams }: { searchParams: { month?: string } }) => {
+  const { month } = await searchParams;
   const currentMonth = new Date();
-  const selectedMonth = searchParams.month
-    ? parseInt(searchParams.month)
-    : currentMonth.getMonth();
+  const selectedMonth = month ? parseInt(month) : currentMonth.getMonth();
 
   const selectedDate = new Date();
   selectedDate.setMonth(selectedMonth);
@@ -90,7 +89,6 @@ const page = async ({ searchParams }: { searchParams: { month?: string } }) => {
 };
 
 export async function FetchCalculateAttendance(month: Date) {
-  console.log("MOnths", month);
   const Holiday = await getAllHoliday();
   const session = await getSession();
   const userID = await getEmpIdById(session?.user.id as string);

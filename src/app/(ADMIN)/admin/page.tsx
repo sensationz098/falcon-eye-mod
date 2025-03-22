@@ -1,23 +1,25 @@
 export const dynamic = "force-dynamic";
 
-import { RightSide, StatsCard } from "@/components";
+import { BarCharts, RightSide, StatsCard } from "@/components";
+import { totalDepartmentChart } from "@/db/AdminDbQueries";
 import { getSession } from "@/lib/utils";
 
 const page = async () => {
   const session = await getSession();
+  const dep = await totalDepartmentChart();
   return (
     <div className="mx-8">
       <h1 className="text-3xl font-bold">Hello, {session?.user.name} </h1>
       <StatsCard />
-      <div className="flex gap-4">
-        {/* <div className="flex flex-1 gap-2">
-          <PieCharts /> 
-          <BarCharts />
-        </div> */}
+      <div className="mb-40 hidden w-full grid-cols-1 gap-4 md:grid md:grid-cols-2">
+        <BarCharts dep={dep} />
         <div className="">
           <RightSide />
         </div>
-        {/* <div className="hidden pr-10 md:block"></div> */}
+      </div>
+
+      <div className="mb-40 block w-full gap-4 md:hidden">
+        <RightSide />
       </div>
     </div>
   );

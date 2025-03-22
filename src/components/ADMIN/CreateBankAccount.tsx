@@ -40,7 +40,6 @@ const CreateBankAccount = ({ id }: { id: string }) => {
   });
 
   async function onSubmit(values: CreateBankAccountSchemaType) {
-    console.log(values);
     const res = await createBankAccountDetails({ id, values });
 
     if (res.status) {
@@ -55,7 +54,7 @@ const CreateBankAccount = ({ id }: { id: string }) => {
     }
   }
   return (
-    <div>
+    <div className="mx-16">
       <Dialog>
         <DialogTrigger asChild>
           <Button>Enter Bank Details</Button>

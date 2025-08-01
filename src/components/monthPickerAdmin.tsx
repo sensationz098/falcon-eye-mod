@@ -23,7 +23,7 @@ export default function MonthPickerAdmin({ emp }: { emp: string }) {
     try {
       const monthNumber = parseInt(month);
       setMonths(monthNumber);
-
+      console.log("MonthNumber", monthNumber);
       // Use replace instead of push to force a full page refresh
       await router.replace(`/admin/attendence/${emp}?month=${monthNumber}`, {
         scroll: false,

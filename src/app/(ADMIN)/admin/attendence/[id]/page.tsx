@@ -27,16 +27,18 @@ const Page = async ({
 
   const { month } = await searchParams;
   const currentMonth = new Date();
-  const selectedMonth = month ? parseInt(month) : currentMonth.getMonth();
+  const today = new Date();
 
-  const selectedDate = new Date();
-  selectedDate.setMonth(selectedMonth);
-
+  const selectedDate = new Date(today.getFullYear(), today.getMonth(), 1);
+  selectedDate.setMonth(month ? parseInt(month) : currentMonth.getMonth());
+  console.log("SELECTED Month", selectedDate, " and ", month);
   const attendance = await FetchCalculateAttendance(
     selectedDate,
     empID?.employee_id as string,
     id,
   );
+
+  // console.log("MERA Attendance", attendance);
 
   // If this is intended for server-side, consider changing how it works or use API routes
   async function handleMonthChange(month: number) {
@@ -63,7 +65,7 @@ const Page = async ({
   return (
     <div>
       <AttendanceWrapper
-        currentMonth={selectedMonth}
+        currentMonth={month ? parseInt(month) : currentMonth.getMonth()}
         onMonthChange={handleMonthChange}
       >
         <div>
@@ -113,7 +115,7 @@ export async function FetchCalculateAttendance(
   id: string,
 ) {
   const Holiday = await getAllHoliday();
-
+  console.log("MERA MONTH", month);
   const attendence = await fetchAttendence({
     params: empID,
     start: format(startOfMonth(month), "dd/MM/yyyy"),

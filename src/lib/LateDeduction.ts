@@ -39,12 +39,12 @@ export default function LateDeduction(data: DownloadInOutPunchDataType[]) {
     if (LateTime <= -1) {
       if (
         (LateTime < -70 && isSunday(inTimeDate)) ||
-        (LateTime < -11 && !isSunday(inTimeDate))
+        (LateTime <= -11 && !isSunday(inTimeDate))
       ) {
         // console.log("Lele Half Day in time", LateTime, " and ", inTimeDate);
         H++;
       } else if (
-        (LateTime < -60 && isSunday(inTimeDate)) ||
+        (LateTime <= -60 && isSunday(inTimeDate)) ||
         (LateTime <= -1 && !isSunday(inTimeDate))
       ) {
         // console.log("Lele Late in time", LateTime, " and ", inTimeDate);

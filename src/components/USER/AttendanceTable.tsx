@@ -13,11 +13,14 @@ import { checkHoliday } from "@/utils/dateUtils";
 
 interface AttendanceTableProps {
   attendence: InOutPunchData[];
+  branch: string;
 }
 
 export default async function AttendanceTable({
   attendence,
+  branch = "DELHI",
 }: AttendanceTableProps) {
+  console.log(branch);
   const sortedAttendance = attendence.sort((a, b) => {
     const [dayA, monthA, yearA] = a.DateString.split("/").map(Number);
     const [dayB, monthB, yearB] = b.DateString.split("/").map(Number);
@@ -55,6 +58,7 @@ export default async function AttendanceTable({
             const isWeekend = isSunday(parsedDate);
 
             let status = "";
+
             if (i.Status === "P" && isWeekend) {
               status = "Weekend On";
             } else if (i.Status === "P" && isHoliday) {
@@ -74,76 +78,88 @@ export default async function AttendanceTable({
                       : "Absent";
             }
 
-            const LateIn = i.INTime.split(":");
-            const LateInHours = parseInt(LateIn[0]);
-            const LateInMinutes = parseInt(LateIn[1]);
+            // --- Punch In ---
+            const [inHours, inMinutes] = i.INTime.split(":").map(Number);
 
             let LateInTime = "";
-            if (
-              LateInHours > 8 &&
-              LateInMinutes > 5 &&
-              LateInHours > 8 &&
-              LateInMinutes < 15
-            ) {
-              LateInTime = "Late In";
-            } else if (LateInHours > 8 && LateInMinutes > 15) {
-              LateInTime = "Half";
-            } else if (LateInHours <= 9 && LateInMinutes <= 5) {
-              LateInTime = "ontime";
+            if (inHours < 9 || (inHours === 9 && inMinutes <= 5)) {
+              LateInTime = "ontime"; // Green
+            } else if (inHours === 9 && inMinutes >= 6 && inMinutes <= 15) {
+              LateInTime = "late"; // Yellow
             } else {
-              LateInTime = "holiday";
+              LateInTime = "half"; // Red
             }
 
-            const LateOut = i.OUTTime.split(":");
-            const LateOutHours = parseInt(LateOut[0]);
-            const LateOutMinutes = parseInt(LateOut[1]);
+            // --- Punch Out ---
+            const [outHours, outMinutes] = i.OUTTime.split(":").map(Number);
 
             let LateOutTime = "";
             if (
-              (LateOutHours == 16 && LateOutMinutes > 30) ||
-              (LateOutHours == 17 && LateOutMinutes <= 30)
+              (outHours === 18 && outMinutes >= 0 && branch === "DELHI") ||
+              (outHours === 17 && outMinutes >= 0 && branch !== "DELHI")
             ) {
-              LateOutTime = "Late Out";
-            } else if (LateOutHours <= 16 && LateOutMinutes < 30) {
-              LateOutTime = "Half";
-            } else if (
-              (LateOutHours === 17 && LateInMinutes >= 30) ||
-              LateOutHours === 18
-            ) {
-              LateOutTime = "ontime";
+              LateOutTime = "ontime"; // Green
+            } else if (outHours === 17 && outMinutes >= 0) {
+              LateOutTime = "late"; // Yellow
+            } else if (outHours < 17) {
+              LateOutTime = "half"; // Red
             } else {
-              LateOutTime = "holiday";
+              LateOutTime = "half";
             }
+
+            const getStatusColor = (status: string) => {
+              switch (status) {
+                case "Absent":
+                  return "text-red-500";
+                case "Present":
+                  return "text-green-500";
+                case "Holiday":
+                  return "text-[#A855F7]"; // purple
+                case "Week Off":
+                  return "text-blue-500";
+                case "Holiday On":
+                case "Weekend On":
+                  return "text-pink-500";
+                default:
+                  return "text-white";
+              }
+            };
 
             return (
               <TableRow key={index}>
                 <TableCell>{dateString}</TableCell>
                 <TableCell
                   className={`hidden font-bold md:table-cell ${
-                    LateInTime === "ontime"
-                      ? "text-green-500"
-                      : LateInTime === "Half"
-                        ? "text-red-500"
-                        : LateInTime === "Late In"
-                          ? "text-yellow-500"
-                          : "text-white"
+                    !i.INTime // if blank
+                      ? getStatusColor(status)
+                      : LateInTime === "ontime"
+                        ? "text-green-500"
+                        : LateInTime === "half"
+                          ? "text-red-500"
+                          : LateInTime === "late"
+                            ? "text-yellow-500"
+                            : "text-white"
                   }`}
                 >
-                  {i.INTime}
+                  {i.INTime || "--"}
                 </TableCell>
+
                 <TableCell
                   className={`hidden font-bold md:table-cell ${
-                    LateOutTime === "ontime"
-                      ? "text-green-500"
-                      : LateOutTime === "Half"
-                        ? "text-red-500"
-                        : LateOutTime === "Late Out"
-                          ? "text-yellow-500"
-                          : "text-white"
+                    !i.OUTTime // if blank
+                      ? getStatusColor(status)
+                      : LateOutTime === "ontime"
+                        ? "text-green-500"
+                        : LateOutTime === "half"
+                          ? "text-red-500"
+                          : LateOutTime === "late"
+                            ? "text-yellow-500"
+                            : "text-white"
                   }`}
                 >
-                  {i.OUTTime}
+                  {i.OUTTime || "--"}
                 </TableCell>
+
                 <TableCell className="md:hidden">
                   <span
                     className={`font-bold ${
@@ -184,7 +200,7 @@ export default async function AttendanceTable({
                       : status === "Absent"
                         ? "text-red-500"
                         : status === "Holiday"
-                          ? "text-yellow-500"
+                          ? "text-[#A855F7]"
                           : status === "Holiday On" || status === "Weekend On"
                             ? "text-pink-500"
                             : "text-blue-600"

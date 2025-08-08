@@ -31,14 +31,13 @@ const Page = async ({
 
   const selectedDate = new Date(today.getFullYear(), today.getMonth(), 1);
   selectedDate.setMonth(month ? parseInt(month) : currentMonth.getMonth());
-  console.log("SELECTED Month", selectedDate, " and ", month);
+
   const attendance = await FetchCalculateAttendance(
     selectedDate,
     empID?.employee_id as string,
     id,
+    empID.branch,
   );
-
-  // console.log("MERA Attendance", attendance);
 
   // If this is intended for server-side, consider changing how it works or use API routes
   async function handleMonthChange(month: number) {
@@ -101,7 +100,7 @@ const Page = async ({
             </div>
           </div>
           <div className="md:px-20">
-            <AttendanceTable attendence={data} />
+            <AttendanceTable attendence={data} branch={empID.branch} />
           </div>
         </div>
       </AttendanceWrapper>
@@ -113,9 +112,10 @@ export async function FetchCalculateAttendance(
   month: Date,
   empID: string,
   id: string,
+  branch: string,
 ) {
   const Holiday = await getAllHoliday();
-  console.log("MERA MONTH", month);
+
   const attendence = await fetchAttendence({
     params: empID,
     start: format(startOfMonth(month), "dd/MM/yyyy"),
@@ -133,7 +133,12 @@ export async function FetchCalculateAttendance(
   const data: InOutPunchData[] = attendence?.InOutPunchData;
   const salary = await getSalary({ _id: id });
 
-  const payrol = CalculateSalary(data, Holiday, salary?.basic_salary as number);
+  const payrol = CalculateSalary(
+    data,
+    Holiday,
+    salary?.basic_salary as number,
+    branch,
+  );
 
   let TotalSunday = 0;
   const TotalHoliday = payrol.TotalHoliday;
@@ -156,6 +161,7 @@ export async function FetchCalculateAttendance(
     totalAbsent,
     totalPresent,
     totalSalary,
+    branch,
   };
 }
 

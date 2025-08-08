@@ -37,6 +37,7 @@ const page = async ({ searchParams }: { searchParams: { month?: string } }) => {
     totalAbsent,
     totalPresent,
     totalSalary,
+    branch,
   } = attendance;
 
   return (
@@ -80,7 +81,7 @@ const page = async ({ searchParams }: { searchParams: { month?: string } }) => {
             </div>
           </div>
           <div className="md:px-20">
-            <AttendanceTable attendence={data} />
+            <AttendanceTable attendence={data} branch={branch!} />
           </div>
         </div>
       </AttendanceWrapper>
@@ -98,7 +99,8 @@ export async function FetchCalculateAttendance(month: Date) {
     start: format(startOfMonth(month), "dd/MM/yyyy"),
     end: format(endOfMonth(month), "dd/MM/yyyy"),
   });
-
+  const branch = userID?.branch;
+  console.log("MEAR", branch, " and ", getAllHoliday);
   if (
     !attendence ||
     !attendence.InOutPunchData ||
@@ -110,7 +112,12 @@ export async function FetchCalculateAttendance(month: Date) {
   const data: InOutPunchData[] = attendence?.InOutPunchData;
   const salary = await getSalary({ _id: session?.user.id as string });
 
-  const payrol = CalculateSalary(data, Holiday, salary?.basic_salary as number);
+  const payrol = CalculateSalary(
+    data,
+    Holiday,
+    salary?.basic_salary as number,
+    userID?.branch as string,
+  );
 
   let TotalSunday = 0;
   const TotalHoliday = payrol.TotalHoliday;
@@ -133,6 +140,7 @@ export async function FetchCalculateAttendance(month: Date) {
     totalAbsent,
     totalPresent,
     totalSalary,
+    branch,
   };
 }
 

@@ -14,7 +14,10 @@ export type DownloadInOutPunchDataType = {
   Name: string;
 };
 
-export default function LateDeduction(data: DownloadInOutPunchDataType[]) {
+export default function LateDeduction(
+  data: DownloadInOutPunchDataType[],
+  branch: string,
+) {
   let Lat = 0;
   let H = 0;
   let SrtLeave = 0;
@@ -28,13 +31,13 @@ export default function LateDeduction(data: DownloadInOutPunchDataType[]) {
 
     const outTimeFormat = formatDatefromString(i.DateString, i.OUTTime);
     const outTimeDate = new Date(outTimeFormat);
+
+    const branchOutTime = branch.toUpperCase() !== "DELHI" ? "17:00" : "18:00";
     const outTime = differenceInMinutes(
-      formatDatefromString(i.DateString, "18:00"),
+      formatDatefromString(i.DateString, branchOutTime),
       outTimeDate,
     );
 
-    // console.log("In TIME", LateTime, " and ", inTimeDate);
-    // console.log("Out TIME", outTime, " and ", outTimeDate);
     // if (LateTime > -1 && outTime <= 0) return;
     if (LateTime <= -1) {
       if (
@@ -61,10 +64,6 @@ export default function LateDeduction(data: DownloadInOutPunchDataType[]) {
     }
   });
   H += Math.floor(SrtLeave / 3);
-  console.log(SrtLeave / 3);
-  console.log("Half Day", H);
-  console.log("Late ", Lat);
-  console.log("Short Leave ", SrtLeave);
 
   return H + Math.floor(Lat / 3);
 }

@@ -134,6 +134,7 @@ export const getEmpIdById = async (_id: string) => {
     },
     select: {
       employee_id: true,
+      branch: true,
     },
   });
 };

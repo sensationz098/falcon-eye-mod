@@ -35,6 +35,7 @@ export function CalculateSalary(
   data: DownloadInOutPunchDataType[],
   Holiday: allowedHolidaysType[],
   salary: number,
+  branch: string,
 ) {
   const currentMonth = parse(
     data[0].DateString,
@@ -152,7 +153,7 @@ export function CalculateSalary(
       absentCount = absentCount - 1;
     }
   }
-  const h = LateDeduction(data);
+  const h = LateDeduction(data, branch);
   const perday = salary / 30;
   absentCount = absentCount + h / 2;
 

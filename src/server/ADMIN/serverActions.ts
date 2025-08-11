@@ -11,6 +11,7 @@ import {
   UpdateEmployeeSchemaType,
   UpdatePayrollDetailsSchemaType,
 } from "@/types";
+import { addMinutes } from "date-fns";
 
 export const addUserAction = async (values: UserSchemaType) => {
   try {
@@ -118,14 +119,21 @@ export const createBankAccountDetails = async ({
 };
 
 export const createHoliday = async (values: HolidaySchemaType) => {
+  const hol = addMinutes(
+    new Date(values.holiday_date),
+    new Date().getTimezoneOffset() * -1,
+  );
+
   try {
     await prisma.holiday.create({
       data: {
-        ...values,
+        holiday_date: hol,
+        message: values.message,
+        title: values.title,
       },
     });
 
-    revalidatePath("/admin/holidays", "page");
+    // revalidatePath("/admin/holidays", "page");
     return { status: true, message: "Holiday created" };
   } catch (err: Error | unknown) {
     if (err instanceof Error) return { status: false, error: err.message };

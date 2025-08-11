@@ -17,7 +17,7 @@ import { format } from "date-fns";
 
 const page = async () => {
   const hoildays = await getHolidays();
-
+  console.log(hoildays);
   return (
     <div>
       {/* <h1>List of all holidays</h1> */}

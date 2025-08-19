@@ -148,9 +148,9 @@ const LeaveRequestForm = () => {
                         selected={field.value}
                         onSelect={field.onChange}
                         initialFocus
-                        disabled={(date) => {
-                          return date <= form.getValues("start_date");
-                        }}
+                        // disabled={(date) => {
+                        //   return date <= form.getValues("start_date");
+                        // }}
                       />
                     </PopoverContent>
                   </Popover>
@@ -160,13 +160,13 @@ const LeaveRequestForm = () => {
             />
 
             <div className="text-center">
-              {form.getValues("end_date")
+              {/* {form.getValues("end_date")
                 ? differenceInDays(
                     form.getValues("end_date")!,
                     form.getValues("start_date"),
                   )
                 : ""}
-              {" days"}
+              {" days"} */}
             </div>
           </div>
 

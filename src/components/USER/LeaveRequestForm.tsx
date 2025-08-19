@@ -76,7 +76,6 @@ const LeaveRequestForm = () => {
           className="space-y-8 px-20"
         >
           {/* start date */}
-
           <div className="flex flex-col items-center gap-4 md:flex-row md:gap-5">
             <FormField
               control={form.control}
@@ -109,9 +108,6 @@ const LeaveRequestForm = () => {
                         selected={field.value}
                         onSelect={field.onChange}
                         initialFocus
-                        disabled={(date) => {
-                          return date < new Date();
-                        }}
                       />
                     </PopoverContent>
                   </Popover>
@@ -153,7 +149,7 @@ const LeaveRequestForm = () => {
                         onSelect={field.onChange}
                         initialFocus
                         disabled={(date) => {
-                          return date < form.getValues("start_date");
+                          return date <= form.getValues("start_date");
                         }}
                       />
                     </PopoverContent>
